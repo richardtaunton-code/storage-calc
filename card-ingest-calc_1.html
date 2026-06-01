@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Card Ingest">
+<meta name="theme-color" content="#1c1c1e">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='38' fill='%231c1c1e'/%3E%3Crect x='44' y='54' width='56' height='72' rx='6' fill='none' stroke='%2330d158' stroke-width='5'/%3E%3Crect x='56' y='70' width='32' height='4' rx='2' fill='%2330d158'/%3E%3Crect x='56' y='82' width='24' height='4' rx='2' fill='%2330d158' opacity='.6'/%3E%3Crect x='56' y='94' width='28' height='4' rx='2' fill='%2330d158' opacity='.4'/%3E%3Cpath d='M108 100 L136 100 M122 86 L136 100 L122 114' stroke='%230a84ff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<title>Card Ingest Calculator</title>
+<style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   APPLE iOS DESIGN SYSTEM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  /* iOS System Colors */
+  --blue:    #0a84ff;
+  --green:   #30d158;
+  --orange:  #ff9f0a;
+  --red:     #ff453a;
+  --purple:  #bf5af2;
+  --teal:    #5ac8fa;
+  --yellow:  #ffd60a;
+  --indigo:  #5e5ce6;
+
+  /* iOS Dark backgrounds */
+  --bg:          #000000;
+  --bg2:         #1c1c1e;
+  --bg3:         #2c2c2e;
+  --bg4:         #3a3a3c;
+  --separator:   rgba(84,84,88,0.65);
+  --separator2:  rgba(84,84,88,0.36);
+
+  /* iOS Label colors */
+  --label:           #ffffff;
+  --label2:          rgba(235,235,245,0.6);
+  --label3:          rgba(235,235,245,0.3);
+  --label4:          rgba(235,235,245,0.18);
+
+  /* Fills */
+  --fill:        rgba(120,120,128,0.36);
+  --fill2:       rgba(120,120,128,0.32);
+  --fill3:       rgba(118,118,128,0.24);
+  --fill4:       rgba(116,116,128,0.18);
+
+  /* Typography */
+  --font:  -apple-system, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
+  --mono:  'SF Mono', 'Menlo', monospace;
+
+  --radius-sm:  10px;
+  --radius:     14px;
+  --radius-lg:  20px;
+}
+
+html { background: var(--bg); }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--label);
+  min-height: 100svh;
+  padding-bottom: max(32px, env(safe-area-inset-bottom));
+  overflow-x: hidden;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NAVIGATION BAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: rgba(28,28,30,0.82);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  backdrop-filter: blur(20px) saturate(1.8);
+  border-bottom: 0.5px solid var(--separator);
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-left: max(20px, env(safe-area-inset-left));
+  padding-right: max(20px, env(safe-area-inset-right));
+  padding-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.nav-title {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.41px;
+  color: var(--label);
+  white-space: nowrap;
+}
+
+.nav-subtitle {
+  font-size: 12px;
+  color: var(--label2);
+  letter-spacing: -0.08px;
+}
+
+.nav-btn {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--blue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.nav-btn:active { opacity: 0.5; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   LARGE TITLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.large-title-section {
+  padding: 20px 20px 0;
+}
+
+.large-title {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.41px;
+  color: var(--label);
+  line-height: 1.12;
+}
+
+.large-title-sub {
+  font-size: 15px;
+  color: var(--label2);
+  margin-top: 4px;
+  letter-spacing: -0.24px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SECTION + INSET GROUPED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.section {
+  padding: 20px 20px 0;
+}
+
+.section-header {
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -0.08px;
+  color: var(--label2);
+  text-transform: uppercase;
+  padding: 0 4px 6px;
+}
+
+.grouped-list {
+  background: var(--bg2);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  position: relative;
+  gap: 12px;
+}
+
+.list-row + .list-row::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 16px; right: 0;
+  height: 0.5px;
+  background: var(--separator2);
+}
+
+.row-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.row-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.row-label {
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -0.41px;
+  color: var(--label);
+}
+
+.row-sublabel {
+  font-size: 13px;
+  color: var(--label2);
+  letter-spacing: -0.08px;
+  margin-top: 1px;
+}
+
+.row-value {
+  font-size: 17px;
+  color: var(--label2);
+  letter-spacing: -0.41px;
+  flex-shrink: 0;
+}
+
+.row-disclosure {
+  color: var(--label3);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NATIVE SELECT / INPUT OVERLAYS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.select-overlay {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  font-size: 16px; /* prevents zoom on iOS */
+}
+
+.number-input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--blue);
+  font-family: var(--font);
+  font-size: 17px;
+  letter-spacing: -0.41px;
+  text-align: right;
+  width: 80px;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 0;
+}
+
+.number-input::-webkit-inner-spin-button,
+.number-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   STEPPER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--fill3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.stepper-btn {
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  color: var(--blue);
+  font-size: 20px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s;
+  line-height: 1;
+  padding-bottom: 1px;
+}
+.stepper-btn:active { opacity: 0.5; }
+
+.stepper-val {
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--label);
+  min-width: 28px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.41px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SEGMENTED CONTROL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.segmented {
+  display: flex;
+  background: var(--fill3);
+  border-radius: 9px;
+  padding: 2px;
+  gap: 2px;
+}
+
+.seg-btn {
+  flex: 1;
+  height: 30px;
+  background: none;
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font);
+  color: var(--label2);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: -0.08px;
+  white-space: nowrap;
+  padding: 0 4px;
+}
+
+.seg-btn.active {
+  background: var(--bg4);
+  color: var(--label);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   CAMERA CARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.camera-card {
+  background: var(--bg2);
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+}
+
+.camera-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+  border-bottom: 0.5px solid var(--separator2);
+}
+
+.camera-card-num {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.camera-card-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--label);
+  letter-spacing: -0.24px;
+  margin-top: 2px;
+}
+
+.remove-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--fill);
+  border: none;
+  color: var(--label2);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+  padding-bottom: 1px;
+}
+.remove-btn:active { opacity: 0.6; }
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ADD CAMERA BUTTON
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.add-camera-btn {
+  width: 100%;
+  background: var(--bg2);
+  border: none;
+  border-radius: var(--radius);
+  color: var(--blue);
+  font-family: var(--font);
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -0.41px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  text-align: left;
+}
+.add-camera-btn:active { opacity: 0.6; }
+
+.add-camera-btn-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 300;
+  flex-shrink: 0;
+  line-height: 1;
+  padding-bottom: 1px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   RESULTS CARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.results-card {
+  background: var(--bg2);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.result-hero {
+  padding: 20px 20px 16px;
+  text-align: center;
+  background: linear-gradient(160deg, rgba(10,132,255,0.15) 0%, rgba(48,209,88,0.08) 100%);
+  border-bottom: 0.5px solid var(--separator2);
+}
+
+.result-hero-label {
+  font-size: 13px;
+  color: var(--label2);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+}
+
+.result-hero-value {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  line-height: 1;
+  color: var(--label);
+  font-variant-numeric: tabular-nums;
+}
+
+.result-hero-unit {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--label2);
+  margin-left: 4px;
+  letter-spacing: -0.5px;
+}
+
+.result-hero-sub {
+  font-size: 13px;
+  color: var(--label2);
+  margin-top: 6px;
+  letter-spacing: -0.08px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   STAT GRID
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.stat-cell {
+  padding: 14px 16px;
+  border-right: 0.5px solid var(--separator2);
+  border-bottom: 0.5px solid var(--separator2);
+}
+.stat-cell:nth-child(even) { border-right: none; }
+.stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+.stat-label {
+  font-size: 12px;
+  color: var(--label2);
+  letter-spacing: -0.08px;
+  margin-bottom: 3px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-sub {
+  font-size: 12px;
+  color: var(--label3);
+  margin-top: 2px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   OFFLOAD SECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.offload-row {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.offload-row + .offload-row { border-top: 0.5px solid var(--separator2); }
+
+.offload-ssd-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--label);
+  letter-spacing: -0.24px;
+}
+
+.offload-ssd-spec {
+  font-size: 12px;
+  color: var(--label2);
+  margin-top: 2px;
+}
+
+.offload-time {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--green);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.offload-time-unit {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--label3);
+  margin-top: 2px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   BADGE / TAG
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.08px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   PROGRESS BAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.progress-wrap {
+  height: 4px;
+  background: var(--fill3);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   EMPTY STATE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.empty-state {
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.4;
+}
+
+.empty-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--label2);
+  letter-spacing: -0.41px;
+  margin-bottom: 8px;
+}
+
+.empty-body {
+  font-size: 15px;
+  color: var(--label3);
+  line-height: 1.5;
+  letter-spacing: -0.24px;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   TOTAL BAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.total-bar {
+  background: var(--bg2);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.total-bar-label {
+  font-size: 15px;
+  color: var(--label2);
+  letter-spacing: -0.24px;
+}
+
+.total-bar-value {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: var(--green);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   INLINE SELECT ROW (hidden native)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.select-row {
+  position: relative;
+  cursor: pointer;
+}
+
+.select-row::after {
+  content: '›';
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  color: var(--label3);
+  font-size: 18px;
+  pointer-events: none;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   ANIMATIONS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.camera-card, .results-card, .total-bar {
+  animation: slideDown 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DIVIDER LABEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+.divider-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--label3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 4px 8px;
+}
+
+/* Responsive tweak for larger screens */
+@media (min-width: 500px) {
+  .stat-grid { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .stat-cell:nth-child(even) { border-right: 0.5px solid var(--separator2); }
+  .stat-cell:nth-last-child(-n+4) { border-bottom: none; }
+  .stat-cell:nth-last-child(-n+2) { border-bottom: 0.5px solid var(--separator2); }
+  .stat-cell:last-child, .stat-cell:nth-last-child(2) { border-bottom: none; }
+  .stat-cell:nth-child(4n) { border-right: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV BAR -->
+<div class="nav-bar">
+  <div>
+    <div class="nav-title">Card Ingest</div>
+  </div>
+  <div style="display:flex;gap:4px">
+    <button class="nav-btn" onclick="resetAll()">Reset</button>
+  </div>
+</div>
+
+<!-- LARGE TITLE -->
+<div class="large-title-section" style="padding-bottom:8px">
+  <div class="large-title">Internal Card Record</div>
+  <div class="large-title-sub">Storage calculator &amp; offload estimator</div>
+</div>
+
+<!-- ════════════════════════════
+     CAMERAS  (first)
+════════════════════════════ -->
+<div class="section">
+  <div class="section-header">Cameras</div>
+  <div id="cameras-container" style="display:flex;flex-direction:column;gap:10px"></div>
+  <div style="margin-top:10px">
+    <button class="add-camera-btn" onclick="addCamera()">
+      <div class="add-camera-btn-icon">+</div>
+      <span>Add Camera</span>
+    </button>
+  </div>
+</div>
+
+<!-- Grand total when multiple cameras -->
+<div class="section" id="grand-total-section" style="display:none">
+  <div id="grand-total-container"></div>
+</div>
+
+<div style="height:32px"></div>
+
+<!-- ════════════════════════════
+     JS DATA + LOGIC
+════════════════════════════ -->
+<script>
+// ─────────────────────────────────────────────────────────────
+// CAMERA DATABASE
+// ─────────────────────────────────────────────────────────────
+const CAMERA_DB = {
+
+  // ── BLACKMAGIC ──────────────────────────────────────────────
+  'bmd': {
+    brand: 'Blackmagic Design', emoji: '🎬',
+    models: {
+      'bmd_pocket4k':   { name: 'Pocket Cinema Camera 4K',  card: 'CFast 2.0 / SD UHS-II', cardSizes: [256,512],  cardReadMB: 540 },
+      'bmd_pocket6k':   { name: 'Pocket Cinema Camera 6K',  card: 'CFast 2.0 / SD UHS-II', cardSizes: [256,512],  cardReadMB: 540 },
+      'bmd_pocket6kpro':{ name: 'Pocket Cinema Camera 6K Pro', card: 'CFast 2.0 / SD UHS-II', cardSizes: [256,512], cardReadMB: 540 },
+      'bmd_pocket6kg2': { name: 'Pocket Cinema Camera 6K G2', card: 'CFast 2.0 / SD UHS-II', cardSizes: [256,512], cardReadMB: 540 },
+      'bmd_cinema6k':   { name: 'Cinema Camera 6K',         card: 'CFexpress Type B',        cardSizes: [256,512,1000], cardReadMB: 1800 },
+      'bmd_pyxis6k':    { name: 'PYXIS 6K',                 card: 'CFexpress Type B',        cardSizes: [256,512,1000], cardReadMB: 1800 },
+      'bmd_ursamini4k': { name: 'URSA Mini Pro 4.6K G2',    card: 'CFast 2.0 / SD UHS-II',  cardSizes: [256,512],  cardReadMB: 540 },
+      'bmd_ursamini12k':{ name: 'URSA Mini Pro 12K',        card: 'CFast 2.0 / SD UHS-II',  cardSizes: [256,512],  cardReadMB: 540 },
+    },
+    codecs: {
+      'bmd_pocket4k':   [
+        { id:'braw_12_1', label:'BRAW 12:1',   mbps:50,  rasters:['HD 1920×1080','4K DCI 4096×2160'], fps:[24,25,30,60] },
+        { id:'braw_8_1',  label:'BRAW 8:1',    mbps:75,  rasters:['HD 1920×1080','4K DCI 4096×2160'], fps:[24,25,30,60] },
+        { id:'braw_6_1',  label:'BRAW 6:1',    mbps:100, rasters:['HD 1920×1080','4K DCI 4096×2160'], fps:[24,25,30,60] },
+        { id:'braw_3_1',  label:'BRAW 3:1',    mbps:200, rasters:['HD 1920×1080','4K DCI 4096×2160'], fps:[24,25,30] },
+        { id:'prores_hq', label:'ProRes 422 HQ',mbps:220, rasters:['HD 1920×1080','4K DCI 4096×2160'], fps:[24,25,30,60] },
+        { id:'prores_422',label:'ProRes 422',  mbps:147, rasters:['HD 1920×1080','4K DCI 4096×2160'], fps:[24,25,30,60] },
+        { id:'prores_lt', label:'ProRes 422 LT',mbps:102, rasters:['HD 1920×1080','4K DCI 4096×2160'], fps:[24,25,30,60] },
+      ],
+      'bmd_pocket6k': [
+        { id:'braw_12_1', label:'BRAW 12:1',   mbps:50,  rasters:['HD 1920×1080','4K DCI 4096×2160','6K 6144×3456'], fps:[24,25,30,50,60] },
+        { id:'braw_8_1',  label:'BRAW 8:1',    mbps:100, rasters:['HD 1920×1080','4K DCI 4096×2160','6K 6144×3456'], fps:[24,25,30,50,60] },
+        { id:'braw_6_1',  label:'BRAW 6:1',    mbps:150, rasters:['HD 1920×1080','4K DCI 4096×2160','6K 6144×3456'], fps:[24,25,30,50] },
+        { id:'braw_3_1',  label:'BRAW 3:1',    mbps:300, rasters:['HD 1920×1080','4K DCI 4096×2160','6K 6144×3456'], fps:[24,25,30] },
+        { id:'prores_hq', label:'ProRes 422 HQ',mbps:220, rasters:['HD 1920×1080','4K DCI 4096×2160'], fps:[24,25,30,60] },
+        { id:'prores_422',label:'ProRes 422',  mbps:147, rasters:['HD 1920×1080','4K DCI 4096×2160'], fps:[24,25,30,60] },
+      ],
+      'bmd_pocket6kpro': null, // same as 6K
+      'bmd_pocket6kg2':  null,
+      'bmd_cinema6k': [
+        { id:'braw_12_1', label:'BRAW 12:1',   mbps:50,  rasters:['4K DCI 4096×2160','6K 6048×4032'], fps:[24,25,30,36,48,60] },
+        { id:'braw_8_1',  label:'BRAW 8:1',    mbps:120, rasters:['4K DCI 4096×2160','6K 6048×4032'], fps:[24,25,30,36,48,60] },
+        { id:'braw_6_1',  label:'BRAW 6:1',    mbps:200, rasters:['4K DCI 4096×2160','6K 6048×4032'], fps:[24,25,30,36] },
+        { id:'braw_3_1',  label:'BRAW 3:1',    mbps:400, rasters:['4K DCI 4096×2160','6K 6048×4032'], fps:[24,25,30] },
+        { id:'h264_proxy',label:'H.264 Proxy', mbps:12,  rasters:['HD 1920×1080'],                   fps:[24,25,30] },
+      ],
+      'bmd_pyxis6k': null, // same as cinema6k
+      'bmd_ursamini4k': [
+        { id:'braw_12_1', label:'BRAW 12:1',   mbps:50,  rasters:['HD 1920×1080','4K DCI 4096×2160','4.6K 4608×2592'], fps:[24,25,30,60] },
+        { id:'braw_6_1',  label:'BRAW 6:1',    mbps:150, rasters:['HD 1920×1080','4K DCI 4096×2160','4.6K 4608×2592'], fps:[24,25,30] },
+        { id:'prores_hq', label:'ProRes 422 HQ',mbps:220, rasters:['HD 1920×1080','4K DCI 4096×2160'], fps:[24,25,30,60] },
+      ],
+      'bmd_ursamini12k': [
+        { id:'braw_12_1', label:'BRAW 12:1',   mbps:70,  rasters:['4K DCI 4096×2160','8K 8192×4320','12K 12288×6480'], fps:[24,25,30] },
+        { id:'braw_6_1',  label:'BRAW 6:1',    mbps:200, rasters:['4K DCI 4096×2160','8K 8192×4320'],                   fps:[24,25,30] },
+        { id:'braw_3_1',  label:'BRAW 3:1',    mbps:400, rasters:['4K DCI 4096×2160','8K 8192×4320'],                   fps:[24,25] },
+      ],
+    }
+  },
+
+  // ── SONY ────────────────────────────────────────────────────
+  'sony': {
+    brand: 'Sony', emoji: '🎥',
+    models: {
+      'sony_fx3':  { name: 'FX3',   card: 'CFexpress Type A / SD UHS-II', cardSizes: [80,160,320], cardReadMB: 800 },
+      'sony_fx6':  { name: 'FX6',   card: 'CFexpress Type A / SD UHS-II', cardSizes: [80,160,320], cardReadMB: 800 },
+      'sony_fx9':  { name: 'FX9',   card: 'XQD / CFexpress Type B',       cardSizes: [120,240,480], cardReadMB: 1000 },
+      'sony_a7s3': { name: 'A7S III', card: 'CFexpress Type A / SD UHS-II', cardSizes: [80,160], cardReadMB: 800 },
+      'sony_zve1': { name: 'ZV-E1', card: 'CFexpress Type A / SD UHS-II', cardSizes: [80,160],    cardReadMB: 800 },
+    },
+    codecs: {
+      'sony_fx3': [
+        { id:'xavc_si_4k_422',  label:'XAVC S-I 4K 10-bit 4:2:2',  mbps:240, rasters:['4K UHD 3840×2160'],  fps:[24,25,30,60] },
+        { id:'xavc_si_4k_420',  label:'XAVC S-I 4K 10-bit 4:2:0',  mbps:200, rasters:['4K UHD 3840×2160'],  fps:[24,25,30] },
+        { id:'xavc_hs_4k',      label:'XAVC HS 4K (H.265)',         mbps:100, rasters:['4K UHD 3840×2160'],  fps:[24,25,30,60,120] },
+        { id:'xavc_s_4k',       label:'XAVC S 4K (H.264)',          mbps:100, rasters:['4K UHD 3840×2160'],  fps:[24,25,30,60] },
+        { id:'xavc_s_hd',       label:'XAVC S HD',                  mbps:50,  rasters:['HD 1920×1080'],       fps:[24,25,30,60,120,240] },
+      ],
+      'sony_fx6': [
+        { id:'xavc_i_4k_422',   label:'XAVC-I 4K 10-bit 4:2:2',    mbps:600, rasters:['4K UHD 3840×2160','4K DCI 4096×2160'], fps:[24,25,30,60] },
+        { id:'xavc_i_hd_422',   label:'XAVC-I HD 10-bit 4:2:2',    mbps:222, rasters:['HD 1920×1080'],       fps:[24,25,30,60,120] },
+        { id:'xavc_l_4k',       label:'XAVC-L 4K Long GOP',         mbps:100, rasters:['4K UHD 3840×2160'],  fps:[24,25,30] },
+        { id:'xavc_l_hd',       label:'XAVC-L HD Long GOP',         mbps:50,  rasters:['HD 1920×1080'],       fps:[24,25,30,60,120] },
+      ],
+      'sony_fx9': [
+        { id:'xavc_i_6k',       label:'XAVC-I 6K (via adaptor)',    mbps:890, rasters:['6K 6048×4032'],       fps:[24,25,30] },
+        { id:'xavc_i_4k_422',   label:'XAVC-I 4K 10-bit 4:2:2',    mbps:600, rasters:['4K UHD 3840×2160','4K DCI 4096×2160'], fps:[24,25,30,60] },
+        { id:'xavc_l_4k',       label:'XAVC-L 4K Long GOP',         mbps:150, rasters:['4K UHD 3840×2160'],  fps:[24,25,30] },
+        { id:'xavc_l_hd',       label:'XAVC-L HD Long GOP',         mbps:50,  rasters:['HD 1920×1080'],       fps:[24,25,30,60] },
+      ],
+      'sony_a7s3': [
+        { id:'xavc_si_4k',      label:'XAVC S-I 4K 10-bit 4:2:2',  mbps:240, rasters:['4K UHD 3840×2160'],  fps:[24,25,30,60] },
+        { id:'xavc_hs_4k',      label:'XAVC HS 4K (H.265)',         mbps:100, rasters:['4K UHD 3840×2160'],  fps:[24,25,30,60,120] },
+        { id:'xavc_s_4k',       label:'XAVC S 4K (H.264)',          mbps:100, rasters:['4K UHD 3840×2160'],  fps:[24,25,30,60] },
+        { id:'xavc_s_hd',       label:'XAVC S HD',                  mbps:50,  rasters:['HD 1920×1080'],       fps:[24,25,30,60,120,240] },
+      ],
+      'sony_zve1': [
+        { id:'xavc_hs_4k',      label:'XAVC HS 4K (H.265)',         mbps:100, rasters:['4K UHD 3840×2160'],  fps:[24,25,30,60] },
+        { id:'xavc_s_4k',       label:'XAVC S 4K (H.264)',          mbps:100, rasters:['4K UHD 3840×2160'],  fps:[24,25,30,60] },
+        { id:'xavc_s_hd',       label:'XAVC S HD',                  mbps:50,  rasters:['HD 1920×1080'],       fps:[24,25,30,60] },
+      ],
+    }
+  },
+
+  // ── PANASONIC ───────────────────────────────────────────────
+  'panasonic': {
+    brand: 'Panasonic Lumix', emoji: '📷',
+    models: {
+      'pan_gh7':   { name: 'GH7',   card: 'SD / UHS-II / CFexpress Type B', cardSizes: [64,128,256,512], cardReadMB: 540 },
+      'pan_s5iix': { name: 'S5 IIX', card: 'SD / UHS-II', cardSizes: [64,128,256],                        cardReadMB: 312 },
+      'pan_s5ii':  { name: 'S5 II',  card: 'SD / UHS-II', cardSizes: [64,128,256],                        cardReadMB: 312 },
+      'pan_s1h':   { name: 'S1H',    card: 'SD / UHS-II', cardSizes: [64,128,256],                        cardReadMB: 312 },
+    },
+    codecs: {
+      'pan_gh7': [
+        { id:'prores_raw_hq', label:'ProRes RAW HQ',    mbps:4200, rasters:['5.7K 5728×4280'],              fps:[24,25,30] },
+        { id:'prores_raw',    label:'ProRes RAW',        mbps:2100, rasters:['5.7K 5728×4280','4K DCI'],     fps:[24,25,30] },
+        { id:'prores_hq',     label:'ProRes 422 HQ',    mbps:500,  rasters:['4K DCI 4096×2160','HD'],       fps:[24,25,30,60] },
+        { id:'prores_422',    label:'ProRes 422',        mbps:330,  rasters:['4K DCI 4096×2160','HD'],       fps:[24,25,30,60] },
+        { id:'h265_4k',       label:'H.265 4K 10-bit',  mbps:200,  rasters:['4K DCI 4096×2160','4K UHD'],   fps:[24,25,30,60] },
+        { id:'h264_4k',       label:'H.264 4K',         mbps:100,  rasters:['4K DCI 4096×2160','4K UHD'],   fps:[24,25,30,60] },
+      ],
+      'pan_s5iix': [
+        { id:'prores_422',    label:'ProRes 422',        mbps:600,  rasters:['4K UHD 3840×2160','5.8K'],    fps:[24,25,30] },
+        { id:'prores_lt',     label:'ProRes 422 LT',     mbps:400,  rasters:['4K UHD 3840×2160'],           fps:[24,25,30,60] },
+        { id:'h265_4k',       label:'H.265 4K All-I 10-bit', mbps:600, rasters:['4K UHD 3840×2160'],        fps:[24,25,30] },
+        { id:'h264_4k',       label:'H.264 4K 10-bit',  mbps:150,  rasters:['4K UHD 3840×2160'],           fps:[24,25,30,60] },
+      ],
+      'pan_s5ii': [
+        { id:'h265_4k',       label:'H.265 4K 10-bit',  mbps:200,  rasters:['4K UHD 3840×2160'],           fps:[24,25,30,60] },
+        { id:'h264_4k',       label:'H.264 4K',         mbps:150,  rasters:['4K UHD 3840×2160'],           fps:[24,25,30,60] },
+        { id:'h264_hd',       label:'H.264 HD',         mbps:50,   rasters:['HD 1920×1080'],               fps:[24,25,30,60,120] },
+      ],
+      'pan_s1h': [
+        { id:'h265_6k',       label:'H.265 6K 10-bit',  mbps:200,  rasters:['6K 5952×3968'],               fps:[24,25,30] },
+        { id:'h265_4k',       label:'H.265 4K 10-bit',  mbps:150,  rasters:['4K UHD 3840×2160','4K DCI'],  fps:[24,25,30,60] },
+        { id:'h264_4k',       label:'H.264 4K',         mbps:100,  rasters:['4K UHD 3840×2160'],           fps:[24,25,30,60] },
+      ],
+    }
+  },
+
+  // ── ARRI ────────────────────────────────────────────────────
+  'arri': {
+    brand: 'ARRI', emoji: '🎞',
+    models: {
+      'arri_mini_lf':  { name: 'ALEXA Mini LF', card: 'Codex Compact Drive',  cardSizes: [1000,2000], cardReadMB: 2500 },
+      'arri_alexa35':  { name: 'ALEXA 35',       card: 'Codex Compact Drive',  cardSizes: [1000,2000], cardReadMB: 2500 },
+    },
+    codecs: {
+      'arri_mini_lf': [
+        { id:'arriraw',         label:'ARRIRAW',           mbps:3000, rasters:['4.5K LF 4448×3096','2.8K S35'],  fps:[0.75,24,25,30,40,60,90] },
+        { id:'prores_4444xq',   label:'ProRes 4444 XQ',   mbps:500,  rasters:['4.5K LF 4448×3096','2.8K S35'],  fps:[24,25,30,40,60,90] },
+        { id:'prores_4444',     label:'ProRes 4444',       mbps:330,  rasters:['4.5K LF 4448×3096','2.8K S35'],  fps:[24,25,30,40,60,90] },
+        { id:'prores_hq',       label:'ProRes 422 HQ',    mbps:220,  rasters:['4.5K LF 4448×3096','2.8K S35'],  fps:[24,25,30,40,60] },
+      ],
+      'arri_alexa35': [
+        { id:'arriraw',         label:'ARRIRAW',           mbps:4000, rasters:['4K S35','4.6K S35 Open Gate'],   fps:[1,24,25,30,40,60,120] },
+        { id:'prores_4444xq',   label:'ProRes 4444 XQ',   mbps:500,  rasters:['4K S35','4.6K S35 Open Gate'],   fps:[24,25,30,40,60,90] },
+        { id:'prores_4444',     label:'ProRes 4444',       mbps:330,  rasters:['4K S35','4.6K S35 Open Gate'],   fps:[24,25,30,40,60,90] },
+        { id:'prores_hq',       label:'ProRes 422 HQ',    mbps:220,  rasters:['4K S35','HD'],                   fps:[24,25,30,60] },
+      ],
+    }
+  },
+
+  // ── GOPRO ───────────────────────────────────────────────────
+  'gopro': {
+    brand: 'GoPro', emoji: '🤿',
+    models: {
+      'gp_hero13': { name: 'HERO13 Black', card: 'microSD UHS-I', cardSizes: [64,128,256,512], cardReadMB: 170 },
+      'gp_hero12': { name: 'HERO12 Black', card: 'microSD UHS-I', cardSizes: [64,128,256],     cardReadMB: 170 },
+      'gp_max2':   { name: 'MAX2 (360°)',  card: 'microSD UHS-I', cardSizes: [128,256,512],     cardReadMB: 170 },
+    },
+    codecs: {
+      'gp_hero13': [
+        { id:'h265_5_3k',   label:'H.265 5.3K 60fps',   mbps:120, rasters:['5.3K 5312×2988'], fps:[24,25,30,60] },
+        { id:'h265_4k',     label:'H.265 4K 120fps',     mbps:100, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60,120] },
+        { id:'h265_2_7k',   label:'H.265 2.7K 240fps',  mbps:100, rasters:['2.7K 2704×1520'], fps:[60,120,240] },
+        { id:'h265_1080',   label:'H.265 1080p 240fps', mbps:60,  rasters:['HD 1920×1080'],   fps:[30,60,120,240] },
+      ],
+      'gp_hero12': [
+        { id:'h265_5_3k',   label:'H.265 5.3K 60fps',   mbps:120, rasters:['5.3K 5312×2988'], fps:[24,25,30,60] },
+        { id:'h265_4k',     label:'H.265 4K 120fps',     mbps:100, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60,120] },
+        { id:'h265_1080',   label:'H.265 1080p 240fps', mbps:60,  rasters:['HD 1920×1080'],   fps:[30,60,120,240] },
+      ],
+      'gp_max2': [
+        { id:'h265_8k_360', label:'H.265 8K 360°',       mbps:200, rasters:['8K 360° 7680×3840'], fps:[24,30] },
+        { id:'h265_5_7k_360',label:'H.265 5.7K 360°',    mbps:120, rasters:['5.7K 360°'],         fps:[24,30,60] },
+      ],
+    }
+  },
+
+  // ── DJI ─────────────────────────────────────────────────────
+  'dji': {
+    brand: 'DJI', emoji: '🚁',
+    models: {
+      'dji_pocket3':  { name: 'Osmo Pocket 3',  card: 'microSD UHS-I',      cardSizes: [64,128,256,512], cardReadMB: 170 },
+      'dji_action5':  { name: 'Osmo Action 5 Pro', card: 'microSD UHS-I',   cardSizes: [64,128,256,512], cardReadMB: 170 },
+      'dji_action4':  { name: 'Osmo Action 4', card: 'microSD UHS-I',       cardSizes: [64,128,256],     cardReadMB: 170 },
+      'dji_mavic3pro':{ name: 'Mavic 3 Pro',   card: 'microSD / Internal',  cardSizes: [32,64,128],      cardReadMB: 170 },
+    },
+    codecs: {
+      'dji_pocket3': [
+        { id:'h265_4k_120',  label:'H.265 4K 120fps 10-bit', mbps:130, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60,120] },
+        { id:'h265_4k',      label:'H.265 4K 60fps 10-bit',  mbps:130, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60] },
+        { id:'h264_4k',      label:'H.264 4K',               mbps:100, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60] },
+        { id:'h265_1080',    label:'H.265 1080p',            mbps:50,  rasters:['HD 1920×1080'],      fps:[24,25,30,60,120,240] },
+      ],
+      'dji_action5': [
+        { id:'h265_4k_120',  label:'H.265 4K 120fps 10-bit', mbps:130, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60,120] },
+        { id:'h265_4k',      label:'H.265 4K 60fps',         mbps:100, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60] },
+        { id:'h265_1080',    label:'H.265 1080p',            mbps:50,  rasters:['HD 1920×1080'],      fps:[24,25,30,60,120,240] },
+      ],
+      'dji_action4': [
+        { id:'h265_4k',      label:'H.265 4K 60fps 10-bit',  mbps:130, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60] },
+        { id:'h264_4k',      label:'H.264 4K',               mbps:100, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60] },
+        { id:'h265_1080',    label:'H.265 1080p',            mbps:50,  rasters:['HD 1920×1080'],      fps:[24,25,30,60,120] },
+      ],
+      'dji_mavic3pro': [
+        { id:'h265_4k_hq',   label:'H.265 4K 60fps 10-bit',  mbps:200, rasters:['4K UHD 3840×2160','5.1K'], fps:[24,25,30,60] },
+        { id:'h265_4k',      label:'H.265 4K',               mbps:100, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60] },
+        { id:'h264_4k',      label:'H.264 4K',               mbps:100, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60] },
+      ],
+    }
+  }
+};
+
+// resolve codecs (null = copy another model's codecs)
+function resolveCodecs(brandKey, modelKey) {
+  const brand = CAMERA_DB[brandKey];
+  const codecs = brand.codecs[modelKey];
+  if (codecs) return codecs;
+  // fallback: use first model's codecs in same brand that's non-null
+  // e.g. 6K Pro / G2 → same as 6K
+  const firstNonNull = Object.entries(brand.codecs).find(([,v])=>v!==null);
+  return firstNonNull ? firstNonNull[1] : [];
+}
+
+// ─────────────────────────────────────────────────────────────
+// SSD DATA
+// ─────────────────────────────────────────────────────────────
+const SSDS = [
+  { id:'t9_1tb_usb',     name:'Samsung T9 1TB',              iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:1000 },
+  { id:'t9_2tb_usb',     name:'Samsung T9 2TB',              iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:2000 },
+  { id:'t7_1tb_usb',     name:'Samsung T7 1TB',              iface:'USB 3.2 Gen 2',   readMB:1050, capGB:1000 },
+  { id:'t7_2tb_usb',     name:'Samsung T7 2TB',              iface:'USB 3.2 Gen 2',   readMB:1050, capGB:2000 },
+  { id:'sdex_1tb_usb',   name:'SanDisk Extreme 1TB',         iface:'USB 3.2 Gen 2',   readMB:1050, capGB:1000 },
+  { id:'sdex_2tb_usb',   name:'SanDisk Extreme 2TB',         iface:'USB 3.2 Gen 2',   readMB:1050, capGB:2000 },
+  { id:'sdexp_1tb_usb',  name:'SanDisk Extreme PRO 1TB',     iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:1000 },
+  { id:'sdexp_2tb_usb',  name:'SanDisk Extreme PRO 2TB',     iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:2000 },
+  { id:'sdpro_g40_1tb_tb',name:'SanDisk PRO-G40 1TB',        iface:'Thunderbolt 3',   readMB:2700, capGB:1000 },
+  { id:'sdpro_g40_2tb_tb',name:'SanDisk PRO-G40 2TB',        iface:'Thunderbolt 3',   readMB:2700, capGB:2000 },
+  { id:'owc_envoy_1tb_tb',name:'OWC Envoy Pro FX 1TB',       iface:'Thunderbolt 3',   readMB:2800, capGB:1000 },
+  { id:'owc_envoy_2tb_tb',name:'OWC Envoy Pro FX 2TB',       iface:'Thunderbolt 3',   readMB:2800, capGB:2000 },
+  { id:'lacie_1tb_tb',   name:'LaCie Rugged SSD Pro 1TB',    iface:'Thunderbolt 3',   readMB:2800, capGB:1000 },
+  { id:'lacie_2tb_tb',   name:'LaCie Rugged SSD Pro 2TB',    iface:'Thunderbolt 3',   readMB:2800, capGB:2000 },
+  { id:'crucial_x10_1tb',name:'Crucial X10 Pro 1TB',         iface:'USB 3.2 Gen 2x2', readMB:2100, capGB:1000 },
+  { id:'crucial_x10_2tb',name:'Crucial X10 Pro 2TB',         iface:'USB 3.2 Gen 2x2', readMB:2100, capGB:2000 },
+];
+
+// ─────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────
+let cameras = [];
+let camId   = 0;
+
+const G = {
+  days:    1,
+  hours:   8,
+  redund:  2,
+  overhead:1.2,
+};
+
+let selectedSSD = null;
+
+// ─────────────────────────────────────────────────────────────
+// STEPPER
+// ─────────────────────────────────────────────────────────────
+const STEP_LIMITS = {
+  days:   { min:1,   max:365, step:1 },
+  hours:  { min:0.5, max:24,  step:0.5 },
+  redund: { min:1,   max:10,  step:1 },
+};
+
+function step(key, delta) {
+  const lim = STEP_LIMITS[key];
+  G[key] = Math.min(lim.max, Math.max(lim.min, +(G[key] + delta).toFixed(1)));
+  document.getElementById(`${key}-val`).textContent = G[key];
+  calc();
+}
+
+// ─────────────────────────────────────────────────────────────
+// OVERHEAD
+// ─────────────────────────────────────────────────────────────
+function setOverhead(val, btnId, label) {
+  G.overhead = val;
+  calc();
+}
+
+// ─────────────────────────────────────────────────────────────
+// SSD SELECT
+// ─────────────────────────────────────────────────────────────
+function ssdChanged() {
+  const sel = document.getElementById('ssd-select');
+  const val = sel ? sel.value : '';
+  selectedSSD = SSDS.find(s => s.id === val) || null;
+  calc();
+}
+
+// ─────────────────────────────────────────────────────────────
+// CAMERA MANAGEMENT
+// ─────────────────────────────────────────────────────────────
+function addCamera() {
+  const id = ++camId;
+  cameras.push({ id, brandKey:'', modelKey:'', codecId:'', rasterId:'', fps:25, cardGB:0, collapsed:false });
+  renderCameras();
+  calc();
+}
+
+function removeCamera(id) {
+  cameras = cameras.filter(c => c.id !== id);
+  renderCameras();
+  calc();
+}
+
+function camBrandChanged(id) {
+  const cam = cameras.find(c => c.id === id);
+  const sel = document.getElementById(`brand-${id}`);
+  cam.brandKey = sel.value;
+  cam.modelKey = '';
+  cam.codecId  = '';
+  cam.rasterId = '';
+  cam.fps      = 25;
+  cam.cardGB   = 0;
+  renderCameraCard(cam);
+  calc();
+}
+
+function camModelChanged(id) {
+  const cam = cameras.find(c => c.id === id);
+  const sel = document.getElementById(`model-${id}`);
+  cam.modelKey = sel.value;
+  cam.rasterId = '';  // reset raster first now
+  cam.codecId  = '';
+  cam.fps      = 25;
+  cam.cardGB   = 0;
+  renderCameraCard(cam);
+  calc();
+}
+
+function camRasterChanged(id) {
+  const cam = cameras.find(c => c.id === id);
+  const sel = document.getElementById(`raster-${id}`);
+  cam.rasterId = sel.value;
+  cam.codecId  = '';  // codec depends on raster now
+  cam.fps      = 25;
+  renderCameraCard(cam);
+  calc();
+}
+
+function camCodecChanged(id) {
+  const cam = cameras.find(c => c.id === id);
+  const sel = document.getElementById(`codec-${id}`);
+  cam.codecId = sel.value;
+  cam.fps     = 25;
+  renderCameraCard(cam);
+  calc();
+}
+
+function camFpsChanged(id) {
+  const cam = cameras.find(c => c.id === id);
+  const sel = document.getElementById(`fps-${id}`);
+  cam.fps = parseFloat(sel.value);
+  renderCameraCard(cam);
+  calc();
+}
+
+function camCardChanged(id) {
+  const cam = cameras.find(c => c.id === id);
+  const sel = document.getElementById(`card-${id}`);
+  cam.cardGB = parseFloat(sel.value) || 0;
+  renderCameraCard(cam);
+  calc();
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER CAMERAS
+// ─────────────────────────────────────────────────────────────
+function brandSelectHTML(id, val) {
+  let opts = '<option value="">Select brand…</option>';
+  Object.entries(CAMERA_DB).forEach(([bk, b]) => {
+    opts += `<option value="${bk}" ${bk===val?'selected':''}>${b.emoji} ${b.brand}</option>`;
+  });
+  return opts;
+}
+
+function modelSelectHTML(brandKey, val) {
+  if (!brandKey) return '<option value="">Select model…</option>';
+  let opts = '<option value="">Select model…</option>';
+  const brand = CAMERA_DB[brandKey];
+  Object.entries(brand.models).forEach(([mk, m]) => {
+    opts += `<option value="${mk}" ${mk===val?'selected':''}>${m.name}</option>`;
+  });
+  return opts;
+}
+
+function codecSelectHTML(brandKey, modelKey, rasterId, val) {
+  if (!brandKey || !modelKey) return '<option value="">Select codec…</option>';
+  const codecs = resolveCodecs(brandKey, modelKey);
+  // Filter to codecs that support the selected raster (if one is chosen)
+  const filtered = rasterId
+    ? codecs.filter(c => c.rasters.includes(rasterId))
+    : codecs;
+  let opts = '<option value="">Select codec…</option>';
+  filtered.forEach(c => {
+    opts += `<option value="${c.id}" ${c.id===val?'selected':''}>${c.label} — ${c.mbps < 1000 ? c.mbps+'Mbps' : (c.mbps/1000).toFixed(1)+'Gbps'}</option>`;
+  });
+  return opts;
+}
+
+function rasterSelectForModelHTML(brandKey, modelKey, val) {
+  // Collect ALL unique rasters across every codec for this model
+  if (!brandKey || !modelKey) return '<option value="">Select raster…</option>';
+  const codecs = resolveCodecs(brandKey, modelKey);
+  const seen = new Set();
+  codecs.forEach(c => c.rasters.forEach(r => seen.add(r)));
+  let opts = '<option value="">Select raster…</option>';
+  [...seen].forEach(r => {
+    opts += `<option value="${r}" ${r===val?'selected':''}>${r}</option>`;
+  });
+  return opts;
+}
+
+function fpsSelectHTML(brandKey, modelKey, codecId, val) {
+  if (!brandKey || !modelKey || !codecId) return '<option value="">Select FPS…</option>';
+  const codecs = resolveCodecs(brandKey, modelKey);
+  const codec  = codecs.find(c => c.id === codecId);
+  if (!codec) return '<option value="">Select FPS…</option>';
+  let opts = '<option value="">Select FPS…</option>';
+  codec.fps.forEach(f => {
+    opts += `<option value="${f}" ${f===val?'selected':''}>${f} fps</option>`;
+  });
+  return opts;
+}
+
+function cardSelectHTML(brandKey, modelKey, val) {
+  if (!brandKey || !modelKey) return '<option value="0">Select card size…</option>';
+  const model = CAMERA_DB[brandKey].models[modelKey];
+  let opts = '<option value="0">Select card size…</option>';
+  model.cardSizes.forEach(s => {
+    const lbl = s >= 1000 ? s/1000 + ' TB' : s + ' GB';
+    // eslint-disable-next-line eqeqeq
+    opts += `<option value="${s}" ${s == val && val > 0 ? 'selected' : ''}>${lbl}</option>`;
+  });
+  return opts;
+}
+
+function cameraName(cam) {
+  if (!cam.brandKey) return 'New Camera';
+  const brand = CAMERA_DB[cam.brandKey];
+  if (!cam.modelKey) return brand.brand;
+  return `${brand.emoji} ${brand.models[cam.modelKey].name}`;
+}
+
+function renderCameraCard(cam) {
+  const el = document.getElementById(`cam-inner-${cam.id}`);
+  if (!el) return;
+
+  // Order: Brand → Model → Raster → Codec → FPS → Card size
+  const showModel  = !!cam.brandKey;
+  const showRaster = showModel && !!cam.modelKey;
+  const showCodec  = showRaster && !!cam.rasterId;
+  const showFps    = showCodec && !!cam.codecId;
+  const showCard   = showRaster && !!cam.modelKey;
+
+  const brandLabel  = cam.brandKey ? CAMERA_DB[cam.brandKey].brand : 'Not selected';
+  const modelLabel  = (showModel && cam.modelKey) ? CAMERA_DB[cam.brandKey].models[cam.modelKey].name : 'Not selected';
+  const rasterLabel = (showRaster && cam.rasterId) ? cam.rasterId : 'Not selected';
+  const codecLabel  = (() => {
+    if (!showCodec || !cam.codecId) return 'Not selected';
+    const codec = resolveCodecs(cam.brandKey, cam.modelKey).find(c => c.id === cam.codecId);
+    return codec ? codec.label : 'Not selected';
+  })();
+  const fpsLabel    = (showFps && cam.fps) ? `${cam.fps} fps` : 'Not selected';
+  const cardLabel   = (showCard && cam.cardGB > 0)
+    ? (cam.cardGB >= 1000 ? cam.cardGB/1000 + ' TB' : cam.cardGB + ' GB')
+    : 'Not set';
+  const cardSubLabel = showCard ? CAMERA_DB[cam.brandKey].models[cam.modelKey].card : '';
+
+  let html = `
+    <div class="list-row select-row">
+      <div class="row-icon" style="background:rgba(94,92,230,0.2)">📸</div>
+      <div class="row-content"><div class="row-label">Brand</div></div>
+      <div class="row-value">${brandLabel}</div>
+      <select class="select-overlay" id="brand-${cam.id}" onchange="camBrandChanged(${cam.id})">
+        ${brandSelectHTML(cam.id, cam.brandKey)}
+      </select>
+    </div>
+
+    <div class="list-row select-row" style="${showModel?'':'opacity:0.35;pointer-events:none'}">
+      <div class="row-icon" style="background:rgba(94,92,230,0.12)">🎥</div>
+      <div class="row-content"><div class="row-label">Model</div></div>
+      <div class="row-value" style="font-size:15px">${modelLabel}</div>
+      <select class="select-overlay" id="model-${cam.id}" onchange="camModelChanged(${cam.id})" ${showModel?'':'disabled'}>
+        ${modelSelectHTML(cam.brandKey, cam.modelKey)}
+      </select>
+    </div>
+
+    <div class="list-row select-row" style="${showRaster?'':'opacity:0.35;pointer-events:none'}">
+      <div class="row-icon" style="background:rgba(255,159,10,0.2)">🖥</div>
+      <div class="row-content"><div class="row-label">Raster</div></div>
+      <div class="row-value" style="font-size:14px">${rasterLabel}</div>
+      <select class="select-overlay" id="raster-${cam.id}" onchange="camRasterChanged(${cam.id})" ${showRaster?'':'disabled'}>
+        ${rasterSelectForModelHTML(cam.brandKey, cam.modelKey, cam.rasterId)}
+      </select>
+    </div>
+
+    <div class="list-row select-row" style="${showCodec?'':'opacity:0.35;pointer-events:none'}">
+      <div class="row-icon" style="background:rgba(10,132,255,0.2)">📦</div>
+      <div class="row-content"><div class="row-label">Codec</div></div>
+      <div class="row-value" style="font-size:14px;max-width:180px;text-align:right;line-height:1.3">${codecLabel}</div>
+      <select class="select-overlay" id="codec-${cam.id}" onchange="camCodecChanged(${cam.id})" ${showCodec?'':'disabled'}>
+        ${codecSelectHTML(cam.brandKey, cam.modelKey, cam.rasterId, cam.codecId)}
+      </select>
+    </div>
+
+    <div class="list-row select-row" style="${showFps?'':'opacity:0.35;pointer-events:none'}">
+      <div class="row-icon" style="background:rgba(48,209,88,0.2)">⚡️</div>
+      <div class="row-content"><div class="row-label">Frame rate</div></div>
+      <div class="row-value">${fpsLabel}</div>
+      <select class="select-overlay" id="fps-${cam.id}" onchange="camFpsChanged(${cam.id})" ${showFps?'':'disabled'}>
+        ${fpsSelectHTML(cam.brandKey, cam.modelKey, cam.codecId, cam.fps)}
+      </select>
+    </div>
+
+    <div class="list-row select-row" style="${showCard?'':'opacity:0.35;pointer-events:none'}">
+      <div class="row-icon" style="background:rgba(90,200,250,0.2)">💳</div>
+      <div class="row-content">
+        <div class="row-label">Internal card size</div>
+        <div class="row-sublabel">${cardSubLabel || 'Select model first'}</div>
+      </div>
+      <div class="row-value">${cardLabel}</div>
+      <select class="select-overlay" id="card-${cam.id}" onchange="camCardChanged(${cam.id})" ${showCard?'':'disabled'}>
+        ${cardSelectHTML(cam.brandKey, cam.modelKey, cam.cardGB)}
+      </select>
+    </div>`;
+
+  html += `<div id="cam-result-${cam.id}"></div>`;
+  el.innerHTML = html;
+
+  const nameEl = document.getElementById(`cam-name-${cam.id}`);
+  if (nameEl) nameEl.textContent = cameraName(cam);
+}
+
+function toggleCollapse(id) {
+  const cam = cameras.find(c => c.id === id);
+  if (!cam) return;
+  cam.collapsed = !cam.collapsed;
+  const inner = document.getElementById(`cam-inner-${id}`);
+  const chevron = document.getElementById(`chevron-${id}`);
+  const summary = document.getElementById(`cam-summary-${id}`);
+  if (cam.collapsed) {
+    if (inner)   inner.style.display = 'none';
+    if (chevron) chevron.style.transform = 'rotate(-90deg)';
+    if (summary) { summary.textContent = buildSummaryLine(cam); summary.style.display = 'block'; }
+  } else {
+    if (inner)   inner.style.display = '';
+    if (chevron) chevron.style.transform = 'rotate(0deg)';
+    if (summary) summary.style.display = 'none';
+  }
+}
+
+function buildSummaryLine(cam) {
+  if (!cam.brandKey || !cam.modelKey) return 'Not configured';
+  const brand = CAMERA_DB[cam.brandKey];
+  const model = brand.models[cam.modelKey];
+  const parts = [`${brand.emoji} ${model.name}`];
+  if (cam.rasterId) parts.push(cam.rasterId);
+  if (cam.codecId) {
+    const codec = resolveCodecs(cam.brandKey, cam.modelKey).find(c => c.id === cam.codecId);
+    if (codec) parts.push(codec.label);
+  }
+  if (cam.fps) parts.push(`${cam.fps}fps`);
+  return parts.join(' · ');
+}
+
+function renderCameras() {
+  const container = document.getElementById('cameras-container');
+  cameras.forEach((cam, i) => {
+    if (!document.getElementById(`cam-card-${cam.id}`)) {
+      const div = document.createElement('div');
+      div.className = 'camera-card';
+      div.id = `cam-card-${cam.id}`;
+      div.innerHTML = `
+        <div class="camera-card-header" onclick="toggleCollapse(${cam.id})" style="cursor:pointer;user-select:none">
+          <div style="flex:1;min-width:0">
+            <div class="camera-card-num">Camera ${i+1}</div>
+            <div class="camera-card-name" id="cam-name-${cam.id}">New Camera</div>
+            <div id="cam-summary-${cam.id}" style="display:none;font-size:12px;color:var(--label3);margin-top:3px;letter-spacing:-0.08px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+            <div id="chevron-${cam.id}" style="color:var(--label3);font-size:18px;line-height:1;transition:transform 0.2s ease">⌄</div>
+            <button class="remove-btn" onclick="event.stopPropagation();removeCamera(${cam.id})">×</button>
+          </div>
+        </div>
+        <div class="grouped-list" style="border-radius:0" id="cam-inner-${cam.id}"></div>`;
+      container.appendChild(div);
+    }
+    renderCameraCard(cam);
+  });
+  container.querySelectorAll('.camera-card').forEach(el => {
+    const id = parseInt(el.id.replace('cam-card-',''));
+    if (!cameras.find(c => c.id === id)) el.remove();
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// CALCULATIONS
+// ─────────────────────────────────────────────────────────────
+function fmtStorage(gb) {
+  if (gb >= 1000) return { val:(gb/1000).toFixed(2), unit:'TB' };
+  return { val:gb.toFixed(0), unit:'GB' };
+}
+
+function fmtTime(minutes) {
+  if (minutes < 1)   return `${Math.round(minutes*60)}s`;
+  if (minutes < 60)  return `${Math.round(minutes)} min`;
+  const h = Math.floor(minutes/60);
+  const m = Math.round(minutes % 60);
+  return m > 0 ? `${h}h ${m}m` : `${h}h`;
+}
+
+function getCodecMbps(cam) {
+  if (!cam.brandKey || !cam.modelKey || !cam.codecId) return 0;
+  const codecs = resolveCodecs(cam.brandKey, cam.modelKey);
+  const codec  = codecs.find(c => c.id === cam.codecId);
+  return codec ? codec.mbps : 0;
+}
+
+function calc() {
+  let grandRawGB    = 0;
+  let grandRedundGB = 0;
+  let readyCount    = 0;
+
+  cameras.forEach(cam => {
+    const resultEl = document.getElementById(`cam-result-${cam.id}`);
+    if (!resultEl) return;
+
+    const ready = cam.brandKey && cam.modelKey && cam.codecId && cam.rasterId && cam.fps;
+    if (!ready) {
+      resultEl.innerHTML = `
+        <div style="border-top:0.5px solid var(--separator2);padding:14px 16px">
+          <div style="font-size:13px;color:var(--label3);text-align:center">
+            Complete all fields above to continue
+          </div>
+        </div>`;
+      return;
+    }
+
+    const mbps       = getCodecMbps(cam);
+    const rawGBhr    = mbps * 3600 / 8 / 1024;
+    const rawGBday   = rawGBhr * G.hours;
+    const rawGBtotal = rawGBday * G.days;
+    const redundGB   = rawGBtotal * G.redund * G.overhead;
+
+    grandRawGB    += rawGBtotal;
+    grandRedundGB += redundGB;
+    readyCount++;
+
+    const hero   = fmtStorage(redundGB);
+    const brand  = CAMERA_DB[cam.brandKey];
+    const model  = brand.models[cam.modelKey];
+    const codecs = resolveCodecs(cam.brandKey, cam.modelKey);
+    const codec  = codecs.find(c => c.id === cam.codecId);
+
+    const cid = cam.id;
+
+    // ── 1. RECORDING PARAMETERS (inline) ──
+    let html = `
+      <div style="border-top:0.5px solid var(--separator2)">
+        <div style="padding:14px 16px 4px"><div class="divider-label">Recording Parameters</div></div>
+
+        <div class="list-row">
+          <div class="row-icon" style="background:rgba(10,132,255,0.2)">📅</div>
+          <div class="row-content"><div class="row-label">Days</div></div>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="step('days',-1)">−</button>
+            <div class="stepper-val" id="days-val">${G.days}</div>
+            <button class="stepper-btn" onclick="step('days',1)">+</button>
+          </div>
+        </div>
+
+        <div class="list-row" style="border-top:0.5px solid var(--separator2)">
+          <div class="row-icon" style="background:rgba(255,159,10,0.2)">⏱</div>
+          <div class="row-content"><div class="row-label">Hours per day</div></div>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="step('hours',-0.5)">−</button>
+            <div class="stepper-val" id="hours-val">${G.hours}</div>
+            <button class="stepper-btn" onclick="step('hours',0.5)">+</button>
+          </div>
+        </div>
+
+        <div class="list-row" style="border-top:0.5px solid var(--separator2)">
+          <div class="row-icon" style="background:rgba(48,209,88,0.2)">🔁</div>
+          <div class="row-content">
+            <div class="row-label">Redundancy copies</div>
+            <div class="row-sublabel">Identical backup sets</div>
+          </div>
+          <div class="stepper">
+            <button class="stepper-btn" onclick="step('redund',-1)">−</button>
+            <div class="stepper-val" id="redund-val">${G.redund}</div>
+            <button class="stepper-btn" onclick="step('redund',1)">+</button>
+          </div>
+        </div>
+
+        <div class="list-row" style="border-top:0.5px solid var(--separator2);flex-wrap:wrap;gap:8px">
+          <div class="row-icon" style="background:rgba(191,90,242,0.2)">📊</div>
+          <div class="row-content">
+            <div class="row-label">Overhead factor</div>
+            <div class="row-sublabel" id="overhead-sublabel">${((G.overhead-1)*100).toFixed(0)}% overhead</div>
+          </div>
+          <div class="segmented">
+            <button class="seg-btn ${G.overhead===1.1?'active':''}" id="oh-pct" onclick="setOverhead(1.1,'oh-pct','10%')">10%</button>
+            <button class="seg-btn ${G.overhead===1.2?'active':''}" id="oh-std" onclick="setOverhead(1.2,'oh-std','20%')">20%</button>
+            <button class="seg-btn ${G.overhead===1.3?'active':''}" id="oh-con" onclick="setOverhead(1.3,'oh-con','30%')">30%</button>
+            <button class="seg-btn ${G.overhead===1.5?'active':''}" id="oh-cau" onclick="setOverhead(1.5,'oh-cau','50%')">50%</button>
+          </div>
+        </div>
+      </div>`;
+
+    // ── 2. STORAGE REQUIRED ──
+    html += `
+      <div style="border-top:0.5px solid var(--separator2)">
+        <div style="padding:14px 16px 4px"><div class="divider-label">Storage Required</div></div>
+        <div style="padding:4px 16px 16px;text-align:center;background:linear-gradient(160deg,rgba(10,132,255,0.1) 0%,rgba(48,209,88,0.06) 100%)">
+          <div style="font-size:12px;color:var(--label2);margin-bottom:4px">Total with redundancy &amp; overhead</div>
+          <div style="display:flex;align-items:baseline;justify-content:center;gap:4px">
+            <div style="font-size:44px;font-weight:700;letter-spacing:-1px;color:var(--label);font-variant-numeric:tabular-nums">${hero.val}</div>
+            <div style="font-size:22px;color:var(--label2)">${hero.unit}</div>
+          </div>
+          <div style="font-size:12px;color:var(--label3);margin-top:2px">×${G.redund} copies · +${((G.overhead-1)*100).toFixed(0)}% overhead · ${G.days}d × ${G.hours}h/d</div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-cell">
+            <div class="stat-label">Bitrate</div>
+            <div class="stat-value" style="color:var(--blue)">${mbps>=1000?(mbps/1000).toFixed(1)+'G':mbps+'M'}<span style="font-size:12px;font-weight:400">bps</span></div>
+            <div class="stat-sub">${codec?codec.label:''}</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-label">Per hour</div>
+            <div class="stat-value" style="color:var(--blue)">${fmtStorage(rawGBhr).val}<span style="font-size:12px;font-weight:400"> ${fmtStorage(rawGBhr).unit}</span></div>
+            <div class="stat-sub">${cam.rasterId} · ${cam.fps}fps</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-label">Raw total</div>
+            <div class="stat-value">${fmtStorage(rawGBtotal).val}<span style="font-size:12px;font-weight:400"> ${fmtStorage(rawGBtotal).unit}</span></div>
+            <div class="stat-sub">${G.days}d × ${G.hours}h/d</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-label">With redundancy</div>
+            <div class="stat-value" style="color:var(--green)">${hero.val}<span style="font-size:12px;font-weight:400"> ${hero.unit}</span></div>
+            <div class="stat-sub">×${G.redund} copies</div>
+          </div>
+        </div>
+      </div>`;
+
+    // Card recording guide (if card size set)
+    if (cam.cardGB > 0) {
+      const cardCapGB   = cam.cardGB;
+      const rawGBperMin = mbps / 8 / 1024 * 60;
+      const minsPerCard = rawGBperMin > 0 ? cardCapGB / rawGBperMin : 0;
+      const cardsNeeded = rawGBtotal > 0 ? Math.ceil(rawGBtotal / cardCapGB) : 0;
+      html += `
+        <div style="border-top:0.5px solid var(--separator2)">
+          <div style="padding:12px 16px 4px"><div class="divider-label">Card Recording Guide</div></div>
+          <div class="stat-grid" style="grid-template-columns:1fr 1fr">
+            <div class="stat-cell" style="border-bottom:none">
+              <div class="stat-label">Record time / card</div>
+              <div class="stat-value" style="color:var(--orange)">${fmtTime(minsPerCard)}</div>
+              <div class="stat-sub">${cardCapGB>=1000?cardCapGB/1000+'TB':cardCapGB+'GB'} ${model.card}</div>
+            </div>
+            <div class="stat-cell" style="border-bottom:none">
+              <div class="stat-label">Cards needed</div>
+              <div class="stat-value" style="color:var(--orange)">${cardsNeeded}</div>
+              <div class="stat-sub">over ${G.days} day${G.days>1?'s':''}</div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    // ── 3. DESTINATION SSD (inline picker) ──
+    const ssdSelectHTML = `
+      <option value="">Select SSD model…</option>
+      <optgroup label="Samsung — USB 3.2 Gen 2x2">
+        <option value="t9_1tb_usb" ${selectedSSD&&selectedSSD.id==='t9_1tb_usb'?'selected':''}>Samsung T9 1TB (USB 3.2 Gen 2x2)</option>
+        <option value="t9_2tb_usb" ${selectedSSD&&selectedSSD.id==='t9_2tb_usb'?'selected':''}>Samsung T9 2TB (USB 3.2 Gen 2x2)</option>
+        <option value="t7_1tb_usb" ${selectedSSD&&selectedSSD.id==='t7_1tb_usb'?'selected':''}>Samsung T7 1TB (USB 3.2 Gen 2)</option>
+        <option value="t7_2tb_usb" ${selectedSSD&&selectedSSD.id==='t7_2tb_usb'?'selected':''}>Samsung T7 2TB (USB 3.2 Gen 2)</option>
+      </optgroup>
+      <optgroup label="SanDisk — USB 3.2">
+        <option value="sdex_1tb_usb" ${selectedSSD&&selectedSSD.id==='sdex_1tb_usb'?'selected':''}>SanDisk Extreme 1TB (USB 3.2 Gen 2)</option>
+        <option value="sdex_2tb_usb" ${selectedSSD&&selectedSSD.id==='sdex_2tb_usb'?'selected':''}>SanDisk Extreme 2TB (USB 3.2 Gen 2)</option>
+        <option value="sdexp_1tb_usb" ${selectedSSD&&selectedSSD.id==='sdexp_1tb_usb'?'selected':''}>SanDisk Extreme PRO 1TB (USB 3.2 Gen 2x2)</option>
+        <option value="sdexp_2tb_usb" ${selectedSSD&&selectedSSD.id==='sdexp_2tb_usb'?'selected':''}>SanDisk Extreme PRO 2TB (USB 3.2 Gen 2x2)</option>
+      </optgroup>
+      <optgroup label="SanDisk Professional — Thunderbolt">
+        <option value="sdpro_g40_1tb_tb" ${selectedSSD&&selectedSSD.id==='sdpro_g40_1tb_tb'?'selected':''}>SanDisk PRO-G40 1TB (Thunderbolt 3)</option>
+        <option value="sdpro_g40_2tb_tb" ${selectedSSD&&selectedSSD.id==='sdpro_g40_2tb_tb'?'selected':''}>SanDisk PRO-G40 2TB (Thunderbolt 3)</option>
+      </optgroup>
+      <optgroup label="OWC — Thunderbolt">
+        <option value="owc_envoy_1tb_tb" ${selectedSSD&&selectedSSD.id==='owc_envoy_1tb_tb'?'selected':''}>OWC Envoy Pro FX 1TB (Thunderbolt 3)</option>
+        <option value="owc_envoy_2tb_tb" ${selectedSSD&&selectedSSD.id==='owc_envoy_2tb_tb'?'selected':''}>OWC Envoy Pro FX 2TB (Thunderbolt 3)</option>
+      </optgroup>
+      <optgroup label="LaCie — Thunderbolt">
+        <option value="lacie_1tb_tb" ${selectedSSD&&selectedSSD.id==='lacie_1tb_tb'?'selected':''}>LaCie Rugged SSD Pro 1TB (Thunderbolt 3)</option>
+        <option value="lacie_2tb_tb" ${selectedSSD&&selectedSSD.id==='lacie_2tb_tb'?'selected':''}>LaCie Rugged SSD Pro 2TB (Thunderbolt 3)</option>
+      </optgroup>
+      <optgroup label="Crucial — USB 3.2">
+        <option value="crucial_x10_1tb" ${selectedSSD&&selectedSSD.id==='crucial_x10_1tb'?'selected':''}>Crucial X10 Pro 1TB (USB 3.2 Gen 2x2)</option>
+        <option value="crucial_x10_2tb" ${selectedSSD&&selectedSSD.id==='crucial_x10_2tb'?'selected':''}>Crucial X10 Pro 2TB (USB 3.2 Gen 2x2)</option>
+      </optgroup>`;
+
+    const ssdSubLabel = selectedSSD
+      ? `${selectedSSD.iface} · ${selectedSSD.readMB.toLocaleString()} MB/s · ${selectedSSD.capGB>=1000?selectedSSD.capGB/1000+'TB':selectedSSD.capGB+'GB'}`
+      : 'Tap to select — required for offload times';
+
+    html += `
+      <div style="border-top:0.5px solid var(--separator2)">
+        <div style="padding:14px 16px 4px"><div class="divider-label">Destination SSD — Mac Pro via Thunderbolt</div></div>
+        <div class="list-row select-row" style="cursor:pointer">
+          <div class="row-icon" style="background:rgba(90,200,250,0.2)">💾</div>
+          <div class="row-content">
+            <div class="row-label">SSD Model</div>
+            <div class="row-sublabel">${ssdSubLabel}</div>
+          </div>
+          <select class="select-overlay" id="ssd-select" onchange="ssdChanged()">
+            ${ssdSelectHTML}
+          </select>
+        </div>
+      </div>`;
+
+    // ── 4. OFFLOAD — per card ──
+    html += `<div style="border-top:0.5px solid var(--separator2)">
+      <div style="padding:12px 16px 4px"><div class="divider-label">Offload Time — Mac Pro via Thunderbolt</div></div>`;
+
+    if (selectedSSD) {
+      const cardReadMBs  = model.cardReadMB;
+      const ssdWriteMBs  = selectedSSD.readMB * 0.95;
+      const effectiveMBs = Math.min(cardReadMBs, ssdWriteMBs);
+      const isCardLimit  = cardReadMBs < ssdWriteMBs;
+      const bottleneck   = isCardLimit
+        ? `Card reader: ${cardReadMBs.toLocaleString()} MB/s (bottleneck)`
+        : `SSD write: ${Math.round(ssdWriteMBs).toLocaleString()} MB/s (bottleneck)`;
+
+      if (cam.cardGB > 0) {
+        const cardCapGB      = cam.cardGB;
+        const rawGBperMin    = mbps / 8 / 1024 * 60;
+        const cardsNeeded    = rawGBtotal > 0 ? Math.ceil(rawGBtotal / cardCapGB) : 0;
+        const offloadPerCard = (cardCapGB * 1024) / effectiveMBs / 60; // minutes
+        const totalOffload   = (rawGBtotal * 1024) / effectiveMBs / 60;
+
+        // Per-card breakdown rows
+        let cardRows = '';
+        for (let i = 1; i <= Math.min(cardsNeeded, 20); i++) {
+          const isFull = i < cardsNeeded;
+          const thisCardGB = isFull ? cardCapGB : (rawGBtotal - (cardsNeeded-1)*cardCapGB);
+          const thisMins   = (Math.max(thisCardGB,0) * 1024) / effectiveMBs / 60;
+          cardRows += `
+            <div class="offload-row" style="${i>1?'border-top:0.5px solid var(--separator2)':''}">
+              <div>
+                <div class="offload-ssd-name" style="font-size:14px">Card ${i} of ${cardsNeeded}</div>
+                <div class="offload-ssd-spec">${isFull?(cardCapGB>=1000?cardCapGB/1000+'TB':cardCapGB+'GB')+' full card':fmtStorage(Math.max(thisCardGB,0)).val+' '+fmtStorage(Math.max(thisCardGB,0)).unit+' partial'}</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0">
+                <div class="offload-time" style="font-size:18px">${fmtTime(thisMins)}</div>
+                <div class="offload-time-unit">to offload</div>
+              </div>
+            </div>`;
+        }
+        if (cardsNeeded > 20) {
+          cardRows += `<div class="offload-row"><div style="font-size:12px;color:var(--label3)">… ${cardsNeeded-20} more cards</div></div>`;
+        }
+
+        html += `
+          <div class="offload-row" style="background:rgba(90,200,250,0.05)">
+            <div>
+              <div class="offload-ssd-name">${selectedSSD.name}</div>
+              <div class="offload-ssd-spec">${selectedSSD.iface} · ${bottleneck}</div>
+              <div class="offload-ssd-spec" style="color:var(--orange);margin-top:2px">⚠ Times shown for 1 copy — multiply by ${G.redund} for all redundancy copies</div>
+            </div>
+            <div style="text-align:right;flex-shrink:0">
+              <div class="offload-time">${fmtTime(totalOffload)}</div>
+              <div class="offload-time-unit">1 copy · ${cardsNeeded} card${cardsNeeded!==1?'s':''}</div>
+            </div>
+          </div>
+          <div style="border-top:0.5px solid var(--separator2);padding:8px 16px 4px">
+            <div style="font-size:11px;color:var(--label3);text-transform:uppercase;letter-spacing:0.06em">Per card breakdown — 1 copy</div>
+          </div>
+          ${cardRows}`;
+      } else {
+        // No card size — show total only
+        const totalOffload = (rawGBtotal * 1024) / effectiveMBs / 60;
+        html += `
+          <div class="offload-row">
+            <div>
+              <div class="offload-ssd-name">${selectedSSD.name}</div>
+              <div class="offload-ssd-spec">${selectedSSD.iface} · ${bottleneck}</div>
+              <div class="offload-ssd-spec" style="color:var(--orange);margin-top:2px">⚠ Time shown for 1 copy only</div>
+            </div>
+            <div style="text-align:right;flex-shrink:0">
+              <div class="offload-time">${fmtTime(totalOffload)}</div>
+              <div class="offload-time-unit">1 copy (${fmtStorage(rawGBtotal).val} ${fmtStorage(rawGBtotal).unit})</div>
+            </div>
+          </div>
+          <div class="offload-row" style="border-top:0.5px solid var(--separator2)">
+            <div style="font-size:12px;color:var(--label3)">Set internal card size above for a per-card breakdown</div>
+          </div>`;
+      }
+    } else {
+      html += `
+        <div class="offload-row">
+          <div style="font-size:13px;color:var(--label3)">Select a Destination SSD above to see offload times</div>
+        </div>`;
+    }
+
+    html += `</div>`;
+    resultEl.innerHTML = html;
+  });
+
+  // Grand total
+  const gtSection   = document.getElementById('grand-total-section');
+  const gtContainer = document.getElementById('grand-total-container');
+  if (readyCount > 1) {
+    const tot = fmtStorage(grandRedundGB);
+    const raw = fmtStorage(grandRawGB);
+    gtSection.style.display = 'block';
+    gtContainer.innerHTML = `
+      <div class="total-bar">
+        <div>
+          <div class="total-bar-label">All ${readyCount} cameras — combined storage</div>
+          <div style="font-size:13px;color:var(--label3);margin-top:2px">Raw: ${raw.val} ${raw.unit} · ×${G.redund} redundancy</div>
+        </div>
+        <div class="total-bar-value">${tot.val} ${tot.unit}</div>
+      </div>`;
+  } else {
+    gtSection.style.display = 'none';
+  }
+}
+// ─────────────────────────────────────────────────────────────
+// RESET
+// ─────────────────────────────────────────────────────────────
+function resetAll() {
+  if (!confirm('Reset all cameras and parameters?')) return;
+  cameras = [];
+  camId   = 0;
+  G.days    = 1;
+  G.hours   = 8;
+  G.redund  = 2;
+  G.overhead= 1.2;
+  selectedSSD = null;
+  document.getElementById('cameras-container').innerHTML = '';
+  document.getElementById('grand-total-section').style.display = 'none';
+  addCamera();
+  calc();
+}
+
+// ─────────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────────
+// Set 20% as default active
+setOverhead(1.2,'oh-std','20%');
+addCamera();
+calc();
+</script>
+</body>
+</html>

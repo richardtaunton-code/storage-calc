@@ -1,0 +1,25 @@
+# ─── Broadcast Storage Calculator — Netlify Config ───────────────────────────
+
+[build]
+  publish   = "."
+  functions = "netlify/functions"
+
+# ── Security headers ──────────────────────────────────────────────────────────
+# frame-ancestors: allows embedding from your Framer site + *.netlify.app previews
+# Update *.nakedfilm.co.uk to match your actual Framer domain once live.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy   = "frame-ancestors 'self' *.framer.com *.framer.app *.nakedfilm.co.uk *.netlify.app"
+    X-Content-Type-Options    = "nosniff"
+    Referrer-Policy           = "strict-origin-when-cross-origin"
+
+# ── Functions ─────────────────────────────────────────────────────────────────
+[functions]
+  node_bundler = "esbuild"
+
+# ── Redirects: SPA-style catch-all (not strictly needed for single HTML file) ─
+# [[redirects]]
+#   from   = "/*"
+#   to     = "/index.html"
+#   status = 200

@@ -924,77 +924,32 @@ body {
 // ─────────────────────────────────────────────────────────────
 // FREE TIER RESTRICTIONS
 // ─────────────────────────────────────────────────────────────
-let FREE_TIER        = true;
-const FREE_MAX_CAMERAS = 1;
+const FREE_TIER        = true;
+const FREE_MAX_CAMERAS = 99;
 const FREE_DAYS        = 1;
 const FREE_HOURS       = 1;
-const UPGRADE_URL      = 'https://nakedfilm.lemonsqueezy.com/buy/1086219';
+const UPGRADE_URL      = 'mailto:feedback@nakedfilm.co.uk?subject=Storage%20Calc%20%E2%80%94%20Upgrade%20Enquiry';
 
 function showUpgradePrompt(feature) {
-  // If already unlocked somehow, do nothing
-  if (!FREE_TIER) return;
-
   const modal = document.createElement('div');
-  modal.className = 'bsc-upgrade-modal';
   modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);display:flex;align-items:center;justify-content:center;padding:24px;font-family:-apple-system,sans-serif;';
   modal.innerHTML = `
-    <div style="background:#1c1c1e;border-radius:20px;padding:28px 24px;width:100%;max-width:360px">
-      <div style="font-size:36px;text-align:center;margin-bottom:12px">🔒</div>
-      <div style="font-size:18px;font-weight:700;color:#fff;text-align:center;margin-bottom:8px">Full version required</div>
-      <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:20px;text-align:center">
+    <div style="background:#1c1c1e;border-radius:16px;padding:28px 24px;width:100%;max-width:340px;text-align:center">
+      <div style="font-size:36px;margin-bottom:12px">🔒</div>
+      <div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:8px">Full version required</div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:24px">
         <strong style="color:rgba(255,255,255,0.85)">${feature}</strong> is available in the full version of Broadcast Storage Calculator.
       </div>
-      <a href="${UPGRADE_URL}" target="_blank" style="display:block;background:#0a84ff;color:#fff;font-size:16px;font-weight:600;padding:14px;border-radius:12px;text-decoration:none;margin-bottom:20px;text-align:center">
-        Buy — Unlock Full Version
+      <a href="${UPGRADE_URL}" style="display:block;background:#0a84ff;color:#fff;font-size:16px;font-weight:600;padding:14px;border-radius:12px;text-decoration:none;margin-bottom:10px">
+        Get full version
       </a>
-      <div style="border-top:0.5px solid rgba(255,255,255,0.1);padding-top:16px;margin-bottom:16px">
-        <div style="font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:8px">Already purchased? Enter your license key:</div>
-        <input id="bsc-license-input" type="text" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
-          style="width:100%;background:#2c2c2e;border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;font-size:12px;padding:11px 12px;font-family:'SF Mono',Menlo,monospace;outline:none;box-sizing:border-box;letter-spacing:0.02em" />
-        <button onclick="activateLicense()" style="width:100%;margin-top:8px;padding:12px;background:#30d158;border:none;border-radius:10px;color:#000;font-size:15px;font-weight:600;font-family:-apple-system,sans-serif;cursor:pointer">
-          Activate License
-        </button>
-        <div id="bsc-license-msg" style="font-size:12px;color:rgba(255,255,255,0.45);text-align:center;margin-top:8px;min-height:16px"></div>
-      </div>
-      <button onclick="this.closest('.bsc-upgrade-modal').remove()" style="width:100%;padding:12px;background:#3a3a3c;border:none;border-radius:12px;color:rgba(255,255,255,0.5);font-size:15px;font-family:-apple-system,sans-serif;cursor:pointer">
+      <button onclick="this.closest('.bsc-upgrade-modal').remove()" style="width:100%;padding:12px;background:#3a3a3c;border:none;border-radius:12px;color:rgba(255,255,255,0.6);font-size:15px;font-family:-apple-system,sans-serif;cursor:pointer">
         Not now
       </button>
     </div>`;
+  modal.className = 'bsc-upgrade-modal';
   modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
   document.body.appendChild(modal);
-}
-
-async function activateLicense() {
-  const keyInput = document.getElementById('bsc-license-input');
-  const msg = document.getElementById('bsc-license-msg');
-  if (!keyInput || !msg) return;
-  const key = keyInput.value.trim();
-  if (!key) { msg.style.color = '#ff9f0a'; msg.textContent = 'Please enter your license key.'; return; }
-  msg.style.color = 'rgba(255,255,255,0.45)';
-  msg.textContent = 'Verifying…';
-  keyInput.disabled = true;
-  try {
-    const res = await fetch('/.netlify/functions/verify-license', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ license_key: key })
-    });
-    const data = await res.json();
-    if (data.valid) {
-      localStorage.setItem('bsc_license_key', key);
-      msg.style.color = '#30d158';
-      msg.textContent = '✓ License activated! Reloading…';
-      setTimeout(() => location.reload(), 800);
-    } else {
-      keyInput.disabled = false;
-      msg.style.color = '#ff453a';
-      msg.textContent = data.error || 'License not recognised. Please check and try again.';
-    }
-  } catch(e) {
-    keyInput.disabled = false;
-    msg.style.color = '#ff453a';
-    msg.textContent = 'Network error — please check your connection and try again.';
-  }
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -1492,10 +1447,6 @@ function ssdChanged() {
 // CAMERA MANAGEMENT
 // ─────────────────────────────────────────────────────────────
 function addCamera() {
-  if (FREE_TIER && cameras.length >= FREE_MAX_CAMERAS) {
-    showUpgradePrompt('Adding more than 1 ENG camera');
-    return;
-  }
   const id = ++camId;
   cameras.push({ id, brandKey:'', modelKey:'', codecId:'', rasterId:'', fps:25, cardGB:0, collapsed:false, numCameras:1, customMbps:100, bitDepth:'', colourSpace:'', gamma:'' });
   renderCameras();
@@ -1822,7 +1773,7 @@ function renderCameraCard(cam) {
       <div class="stepper">
         <button class="stepper-btn" onpointerdown="holdStep(event,function(){stepCamCount(${cam.id},-1)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">−</button>
         <div class="stepper-val" id="camcount-${cam.id}">${cam.numCameras||1}</div>
-        <button class="stepper-btn" onpointerdown="FREE_TIER ? showUpgradePrompt('Multiple cameras of the same model') : holdStep(event,function(){stepCamCount(${cam.id},1)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">+</button>
+        <button class="stepper-btn" onpointerdown="holdStep(event,function(){stepCamCount(${cam.id},1)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">+</button>
       </div>
     </div>
 
@@ -2134,9 +2085,9 @@ function calc() {
           <div class="row-icon" style="background:rgba(10,132,255,0.2)">📅</div>
           <div class="row-content"><div class="row-label">Days</div></div>
           <div class="stepper">
-            <button class="stepper-btn" onpointerdown="FREE_TIER ? showUpgradePrompt('Adjusting shoot days') : holdStep(event,function(){step('days',-1)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">−</button>
+            <button class="stepper-btn" onpointerdown="holdStep(event,function(){step('days',-1)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">−</button>
             <div class="stepper-val" id="days-val">${G.days}</div>
-            <button class="stepper-btn" onpointerdown="FREE_TIER ? showUpgradePrompt('Adjusting shoot days') : holdStep(event,function(){step('days',1)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">+</button>
+            <button class="stepper-btn" onpointerdown="holdStep(event,function(){step('days',1)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">+</button>
           </div>
         </div>
 
@@ -2144,9 +2095,9 @@ function calc() {
           <div class="row-icon" style="background:rgba(255,159,10,0.2)">⏱</div>
           <div class="row-content"><div class="row-label">Hours per day</div></div>
           <div class="stepper">
-            <button class="stepper-btn" onpointerdown="FREE_TIER ? showUpgradePrompt('Adjusting shoot hours') : holdStep(event,function(){step('hours',-0.5)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">−</button>
+            <button class="stepper-btn" onpointerdown="holdStep(event,function(){step('hours',-0.5)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">−</button>
             <div class="stepper-val" id="hours-val">${G.hours}</div>
-            <button class="stepper-btn" onpointerdown="FREE_TIER ? showUpgradePrompt('Adjusting shoot hours') : holdStep(event,function(){step('hours',0.5)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">+</button>
+            <button class="stepper-btn" onpointerdown="holdStep(event,function(){step('hours',0.5)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">+</button>
           </div>
         </div>
 
@@ -2157,9 +2108,9 @@ function calc() {
             <div class="row-sublabel">Identical backup sets</div>
           </div>
           <div class="stepper">
-            <button class="stepper-btn" onpointerdown="FREE_TIER ? showUpgradePrompt('Adjusting redundancy') : holdStep(event,function(){step('redund',-1)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">−</button>
+            <button class="stepper-btn" onpointerdown="holdStep(event,function(){step('redund',-1)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">−</button>
             <div class="stepper-val" id="redund-val">${G.redund}</div>
-            <button class="stepper-btn" onpointerdown="FREE_TIER ? showUpgradePrompt('Adjusting redundancy') : holdStep(event,function(){step('redund',1)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">+</button>
+            <button class="stepper-btn" onpointerdown="holdStep(event,function(){step('redund',1)})" onpointerup="_clearHold()" onpointerleave="_clearHold()">+</button>
           </div>
         </div>
 
@@ -2170,10 +2121,10 @@ function calc() {
             <div class="row-sublabel" id="overhead-sublabel">${((G.overhead-1)*100).toFixed(0)}% overhead</div>
           </div>
           <div class="segmented">
-            <button class="seg-btn ${G.overhead===1.1?'active':''}" id="oh-pct" onclick="FREE_TIER ? showUpgradePrompt('Adjusting overhead') : setOverhead(1.1,'oh-pct','10%')">10%</button>
-            <button class="seg-btn ${G.overhead===1.2?'active':''}" id="oh-std" onclick="FREE_TIER ? showUpgradePrompt('Adjusting overhead') : setOverhead(1.2,'oh-std','20%')">20%</button>
-            <button class="seg-btn ${G.overhead===1.3?'active':''}" id="oh-con" onclick="FREE_TIER ? showUpgradePrompt('Adjusting overhead') : setOverhead(1.3,'oh-con','30%')">30%</button>
-            <button class="seg-btn ${G.overhead===1.5?'active':''}" id="oh-cau" onclick="FREE_TIER ? showUpgradePrompt('Adjusting overhead') : setOverhead(1.5,'oh-cau','50%')">50%</button>
+            <button class="seg-btn ${G.overhead===1.1?'active':''}" id="oh-pct" onclick="setOverhead(1.1,'oh-pct','10%')">10%</button>
+            <button class="seg-btn ${G.overhead===1.2?'active':''}" id="oh-std" onclick="setOverhead(1.2,'oh-std','20%')">20%</button>
+            <button class="seg-btn ${G.overhead===1.3?'active':''}" id="oh-con" onclick="setOverhead(1.3,'oh-con','30%')">30%</button>
+            <button class="seg-btn ${G.overhead===1.5?'active':''}" id="oh-cau" onclick="setOverhead(1.5,'oh-cau','50%')">50%</button>
           </div>
         </div>
       </div>`;
@@ -4163,34 +4114,12 @@ function showToast(msg) {
 // ─────────────────────────────────────────────────────────────
 // INIT
 // ─────────────────────────────────────────────────────────────
-// ─── LICENSE CHECK ON LOAD ──────────────────────────────────
-(async () => {
-  const savedKey = localStorage.getItem('bsc_license_key');
-  if (savedKey) {
-    try {
-      const res = await fetch('/.netlify/functions/verify-license', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ license_key: savedKey })
-      });
-      const data = await res.json();
-      if (data.valid) {
-        FREE_TIER = false; // unlock full version
-      } else {
-        localStorage.removeItem('bsc_license_key'); // key expired or invalid
-      }
-    } catch(e) {
-      // Offline or function unavailable — default to locked (safe)
-    }
-  }
+setOverhead(1.2,'oh-std','20%');
 
-  setOverhead(1.2,'oh-std','20%');
-  if (FREE_TIER) { G.days = FREE_DAYS; G.hours = FREE_HOURS; }
-  updateGrandTotal();
-  calc();
-  calcMC();
-  setTimeout(enhanceStepperInputs, 50);
-})();
+updateGrandTotal();
+calc();
+calcMC();
+setTimeout(enhanceStepperInputs, 50);
 
 </script>
 </body>

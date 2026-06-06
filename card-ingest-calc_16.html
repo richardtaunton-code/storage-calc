@@ -846,25 +846,29 @@ body {
     <div id="nav-total-value" style="font-size:22px;font-weight:700;letter-spacing:-0.5px;color:var(--green);line-height:1;font-variant-numeric:tabular-nums"></div>
     <div style="font-size:10px;color:rgba(255,255,255,0.55);margin-top:2px;letter-spacing:0.02em">total storage</div>
   </div>
+  <button onclick="resetAll()" aria-label="Reset" style="flex-shrink:0;background:none;border:none;cursor:pointer;padding:4px 2px 4px 12px;display:flex;flex-direction:column;align-items:center;gap:3px;color:rgba(255,255,255,0.5);font-family:var(--font);font-size:10px;font-weight:500;-webkit-tap-highlight-color:transparent;" onpointerdown="this.style.opacity=0.5" onpointerup="this.style.opacity=1" onpointerleave="this.style.opacity=1">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+    Reset
+  </button>
 </div>
 
 <!-- BOTTOM BAR — tabs + actions -->
 <div class="bottom-bar" id="bottom-bar">
   <button class="bottom-tab active" id="tab-eng"    onclick="setTab('eng')"    aria-label="ENG tab">
     <span class="bt-icon">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M14 9h4M14 13h4"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M14 9h4M14 13h4"/></svg>
     </span>
     ENG
   </button>
   <button class="bottom-tab" id="tab-multi"  onclick="setTab('multi')"  aria-label="Multi tab">
     <span class="bt-icon">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="9" height="7" rx="1.5"/><rect x="13" y="4" width="9" height="7" rx="1.5"/><rect x="2" y="13" width="9" height="7" rx="1.5"/><rect x="13" y="13" width="9" height="7" rx="1.5"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="9" height="7" rx="1.5"/><rect x="13" y="4" width="9" height="7" rx="1.5"/><rect x="2" y="13" width="9" height="7" rx="1.5"/><rect x="13" y="13" width="9" height="7" rx="1.5"/></svg>
     </span>
     Multi
   </button>
   <button class="bottom-tab" id="tab-totals" onclick="setTab('totals')" aria-label="Totals tab">
     <span class="bt-icon">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v4H3zM3 10h12v4H3zM3 17h8v4H3z"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v4H3zM3 10h12v4H3zM3 17h8v4H3z"/></svg>
     </span>
     Totals
   </button>
@@ -932,9 +936,15 @@ body {
 
 <!-- ════ TOTALS TAB ════ -->
 <div id="tab-totals-content" class="page-content" style="display:none">
-  <div class="large-title-section" style="padding-bottom:4px">
-    <div class="large-title">Totals</div>
-    <div class="large-title-sub">Combined storage summary</div>
+  <div class="large-title-section" style="padding-bottom:4px;display:flex;align-items:flex-end;justify-content:space-between">
+    <div>
+      <div class="large-title">Totals</div>
+      <div class="large-title-sub">Combined storage summary</div>
+    </div>
+    <button onclick="exportPDF()" style="flex-shrink:0;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);border-radius:10px;cursor:pointer;padding:8px 14px;display:flex;align-items:center;gap:7px;color:rgba(255,255,255,0.75);font-family:var(--font);font-size:13px;font-weight:500;margin-bottom:4px;-webkit-tap-highlight-color:transparent;" onpointerdown="this.style.opacity=0.6" onpointerup="this.style.opacity=1" onpointerleave="this.style.opacity=1">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+      Export PDF
+    </button>
   </div>
   <div class="section" style="padding-top:8px">
     <div id="totals-container"></div>

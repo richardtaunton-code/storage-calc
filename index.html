@@ -9,8 +9,7 @@
 <meta name="theme-color" content="#1c1c1e">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='38' fill='%231c1c1e'/%3E%3Crect x='44' y='54' width='56' height='72' rx='6' fill='none' stroke='%2330d158' stroke-width='5'/%3E%3Crect x='56' y='70' width='32' height='4' rx='2' fill='%2330d158'/%3E%3Crect x='56' y='82' width='24' height='4' rx='2' fill='%2330d158' opacity='.6'/%3E%3Crect x='56' y='94' width='28' height='4' rx='2' fill='%2330d158' opacity='.4'/%3E%3Cpath d='M108 100 L136 100 M122 86 L136 100 L122 114' stroke='%230a84ff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <title>Broadcast Storage Calculator</title>
-<style>
-/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+<style>/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    APPLE iOS DESIGN SYSTEM
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -975,7 +974,6 @@ input, textarea { -webkit-user-select: text; user-select: text; }
   from { opacity:0; transform:translateY(6px); }
   to   { opacity:1; transform:translateY(0); }
 }
-
 </style>
 </head>
 <body>
@@ -1172,8 +1170,7 @@ input, textarea { -webkit-user-select: text; user-select: text; }
 <!-- ════════════════════════════
      JS DATA + LOGIC
 ════════════════════════════ -->
-<script>
-// ── FREE VERSION ────────────────────────────────────
+<script>// ── FREE VERSION ────────────────────────────────────
 const FREE_VERSION = true;
 
 function lockGate() {
@@ -1794,7 +1791,6 @@ function camRasterChanged(id) {
   const cam = cameras.find(c => c.id === id);
   const sel = document.getElementById(`raster-${id}`);
   cam.rasterId = sel.value;
-  cam.codecId  = '';  // codec depends on raster now
   cam.fps      = 25;
   renderCameraCard(cam);
   calc();
@@ -1803,9 +1799,10 @@ function camRasterChanged(id) {
 function camCodecChanged(id) {
   const cam = cameras.find(c => c.id === id);
   const sel = document.getElementById(`codec-${id}`);
-  cam.codecId = sel.value;
-  cam.fps     = 25;
-  cam.gamma   = '';
+  cam.codecId  = sel.value;
+  cam.rasterId = '';  // raster depends on codec now
+  cam.fps      = 25;
+  cam.gamma    = '';
   renderCameraCard(cam);
   calc();
 }
@@ -1916,25 +1913,22 @@ function modelSelectHTML(brandKey, val) {
 function codecSelectHTML(brandKey, modelKey, rasterId, val) {
   if (!brandKey || !modelKey) return '<option value="">Select codec…</option>';
   const codecs = resolveCodecs(brandKey, modelKey);
-  // Filter to codecs that support the selected raster (if one is chosen)
-  const filtered = rasterId
-    ? codecs.filter(c => c.rasters.includes(rasterId))
-    : codecs;
+  // Show all codecs for this model — raster is chosen after
   let opts = '<option value="">Select codec…</option>';
-  filtered.forEach(c => {
+  codecs.forEach(c => {
     opts += `<option value="${c.id}" ${c.id===val?'selected':''}>${c.label} — ${c.mbps < 1000 ? c.mbps+'Mbps' : (c.mbps/1000).toFixed(1)+'Gbps'}</option>`;
   });
   return opts;
 }
 
-function rasterSelectForModelHTML(brandKey, modelKey, val) {
-  // Collect ALL unique rasters across every codec for this model
+function rasterSelectForModelHTML(brandKey, modelKey, codecId, val) {
+  // Filter rasters to only those supported by the selected codec
   if (!brandKey || !modelKey) return '<option value="">Select raster…</option>';
   const codecs = resolveCodecs(brandKey, modelKey);
-  const seen = new Set();
-  codecs.forEach(c => c.rasters.forEach(r => seen.add(r)));
+  const codec  = codecs.find(c => c.id === codecId);
+  const rasters = codec ? codec.rasters : [];
   let opts = '<option value="">Select raster…</option>';
-  [...seen].forEach(r => {
+  rasters.forEach(r => {
     opts += `<option value="${r}" ${r===val?'selected':''}>${r}</option>`;
   });
   return opts;
@@ -1978,12 +1972,12 @@ function renderCameraCard(cam) {
   const el = document.getElementById(`cam-inner-${cam.id}`);
   if (!el) return;
 
-  // Order: Brand → Model → Raster → Codec → FPS → Card size
+  // Order: Brand → Model → Codec → Raster → FPS → Card size
   const isGeneric  = cam.brandKey === 'generic';
   const showModel  = !!cam.brandKey;
-  const showRaster = showModel && !!cam.modelKey;
-  const showCodec  = showRaster && !!cam.rasterId && !isGeneric;
-  const showFps    = isGeneric ? (showRaster && !!cam.rasterId) : (showCodec && !!cam.codecId);
+  const showCodec  = showModel && !!cam.modelKey && !isGeneric;
+  const showRaster = isGeneric ? (showModel && !!cam.modelKey) : (showCodec && !!cam.codecId);
+  const showFps    = showRaster && !!cam.rasterId;
   const showCard   = showFps;
 
   const brandLabel  = cam.brandKey ? CAMERA_DB[cam.brandKey].brand : 'Not selected';
@@ -2065,15 +2059,6 @@ function renderCameraCard(cam) {
       </div>
     </div>
 
-    <div class="list-row select-row" style="${showRaster?'':'opacity:0.35;pointer-events:none'}">
-      <div class="row-icon" style="background:rgba(255,159,10,0.2)">🖥</div>
-      <div class="row-content"><div class="row-label">Raster</div></div>
-      <div class="row-value" style="font-size:14px">${rasterLabel}</div>
-      <select class="select-overlay" id="raster-${cam.id}" onchange="camRasterChanged(${cam.id})" ${showRaster?'':'disabled'}>
-        ${rasterSelectForModelHTML(cam.brandKey, cam.modelKey, cam.rasterId)}
-      </select>
-    </div>
-
     ${cam.brandKey === 'generic' ? `
     <div class="list-row" style="${showRaster?'':'opacity:0.35;pointer-events:none'};border-top:0.5px solid var(--separator2)">
       <div class="row-icon" style="background:rgba(10,132,255,0.2)">📡</div>
@@ -2138,6 +2123,15 @@ function renderCameraCard(cam) {
     </div>
 
     ${gammaRowHTML}
+
+    <div class="list-row select-row" style="${showRaster?'':'opacity:0.35;pointer-events:none'};border-top:0.5px solid var(--separator2)">
+      <div class="row-icon" style="background:rgba(255,159,10,0.2)">🖥</div>
+      <div class="row-content"><div class="row-label">Raster</div></div>
+      <div class="row-value" style="font-size:14px">${rasterLabel}</div>
+      <select class="select-overlay" id="raster-${cam.id}" onchange="camRasterChanged(${cam.id})" ${showRaster?'':'disabled'}>
+        ${rasterSelectForModelHTML(cam.brandKey, cam.modelKey, cam.codecId, cam.rasterId)}
+      </select>
+    </div>
     `}
 
     <div class="list-row select-row" style="${showFps?'':'opacity:0.35;pointer-events:none'}">
@@ -4313,7 +4307,6 @@ updateGrandTotal();
 calc();
 calcMC();
 setTimeout(enhanceStepperInputs, 50);
-
 
 </script>
 </body>

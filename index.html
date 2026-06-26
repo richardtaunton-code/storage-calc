@@ -1380,57 +1380,57 @@ const CAMERA_DB = {
     },
     codecs: {
       'bmd_ursa_cine_12k': [
-        { id:'braw_3_1_12k',  label:'BRAW 3:1 12K',    mbps:900,  rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_6_1_12k',  label:'BRAW 6:1 12K',    mbps:450,  rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_12_1_12k', label:'BRAW 12:1 12K',   mbps:225,  rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_18_1_12k', label:'BRAW 18:1 12K',   mbps:150,  rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'prores_4444_uc',label:'ProRes 4444',      mbps:330,  rasters:['8K 8192×4320','4K DCI 4096×2160','HD 1920×1080'],   fps:[24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
-        { id:'prores_hq_uc',  label:'ProRes 422 HQ',   mbps:220,  rasters:['4K DCI 4096×2160','HD 1920×1080'],                  fps:[24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
+        { id:'braw_3_1_12k',  label:'BRAW 3:1 12K',    mbps:900,  rasterMbps:{'12K 12288×6480':900,'8K 8192×4320':400,'4K DCI 4096×2160':100}, rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_6_1_12k',  label:'BRAW 6:1 12K',    mbps:450,  rasterMbps:{'12K 12288×6480':450,'8K 8192×4320':200,'4K DCI 4096×2160':50}, rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_12_1_12k', label:'BRAW 12:1 12K',   mbps:225,  rasterMbps:{'12K 12288×6480':225,'8K 8192×4320':100,'4K DCI 4096×2160':25}, rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_18_1_12k', label:'BRAW 18:1 12K',   mbps:150,  rasterMbps:{'12K 12288×6480':150,'8K 8192×4320':67,'4K DCI 4096×2160':17}, rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'prores_4444_uc',label:'ProRes 4444',      mbps:330,  rasterMbps:{'8K 8192×4320':660,'4K DCI 4096×2160':330,'HD 1920×1080':85},  rasters:['8K 8192×4320','4K DCI 4096×2160','HD 1920×1080'],   fps:[24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
+        { id:'prores_hq_uc',  label:'ProRes 422 HQ',   mbps:220,  rasterMbps:{'4K DCI 4096×2160':220,'HD 1920×1080':55},        rasters:['4K DCI 4096×2160','HD 1920×1080'],                  fps:[24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
       ],
       'bmd_pyxis_12k': [
-        { id:'braw_3_1_p12k', label:'BRAW 3:1',        mbps:700,  rasters:['12K 12888×8040','9K Super35','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_6_1_p12k', label:'BRAW 6:1',        mbps:350,  rasters:['12K 12888×8040','9K Super35','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_12_1_p12k',label:'BRAW 12:1',       mbps:175,  rasters:['12K 12888×8040','9K Super35','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_3_1_p12k', label:'BRAW 3:1',        mbps:700,  rasterMbps:{'12K 12888×8040':700,'9K Super35':320,'8K 8192×4320':240,'4K DCI 4096×2160':60}, rasters:['12K 12888×8040','9K Super35','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_6_1_p12k', label:'BRAW 6:1',        mbps:350,  rasterMbps:{'12K 12888×8040':350,'9K Super35':160,'8K 8192×4320':120,'4K DCI 4096×2160':30}, rasters:['12K 12888×8040','9K Super35','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_12_1_p12k',label:'BRAW 12:1',       mbps:175,  rasterMbps:{'12K 12888×8040':175,'9K Super35':80,'8K 8192×4320':60,'4K DCI 4096×2160':15}, rasters:['12K 12888×8040','9K Super35','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
         { id:'h264_proxy_p12',label:'H.264 Proxy',     mbps:12,   rasters:['HD 1920×1080'],                                                   fps:[24,25,30] },
       ],
       'bmd_pyxis6k': [
-        { id:'braw_3_1_p6k',  label:'BRAW 3:1',        mbps:300,  rasters:['6K 6048×4032','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_6_1_p6k',  label:'BRAW 6:1',        mbps:150,  rasters:['6K 6048×4032','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_12_1_p6k', label:'BRAW 12:1',       mbps:75,   rasters:['6K 6048×4032','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_3_1_p6k',  label:'BRAW 3:1',        mbps:300,  rasterMbps:{'6K 6048×4032':300,'4K DCI 4096×2160':110,'HD 1920×1080':25}, rasters:['6K 6048×4032','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_6_1_p6k',  label:'BRAW 6:1',        mbps:150,  rasterMbps:{'6K 6048×4032':150,'4K DCI 4096×2160':55,'HD 1920×1080':13}, rasters:['6K 6048×4032','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_12_1_p6k', label:'BRAW 12:1',       mbps:75,   rasterMbps:{'6K 6048×4032':75,'4K DCI 4096×2160':27,'HD 1920×1080':6}, rasters:['6K 6048×4032','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
         { id:'h264_proxy_p6k',label:'H.264 Proxy',     mbps:12,   rasters:['HD 1920×1080'],                                   fps:[24,25,30] },
       ],
       'bmd_cinema6k': [
-        { id:'braw_3_1_c6k',  label:'BRAW 3:1',        mbps:400,  rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_6_1_c6k',  label:'BRAW 6:1',        mbps:200,  rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_12_1_c6k', label:'BRAW 12:1',       mbps:100,  rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_3_1_c6k',  label:'BRAW 3:1',        mbps:400,  rasterMbps:{'6K 6048×4032':400,'4K DCI 4096×2160':145}, rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_6_1_c6k',  label:'BRAW 6:1',        mbps:200,  rasterMbps:{'6K 6048×4032':200,'4K DCI 4096×2160':73}, rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_12_1_c6k', label:'BRAW 12:1',       mbps:100,  rasterMbps:{'6K 6048×4032':100,'4K DCI 4096×2160':36}, rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
         { id:'h264_proxy_c6k',label:'H.264 Proxy',     mbps:12,   rasters:['HD 1920×1080'],                    fps:[24,25,30] },
       ],
       'bmd_pocket6kg2': [
-        { id:'braw_3_1_6k',   label:'BRAW 3:1',        mbps:300,  rasters:['6K 6144×3456','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,50] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_6_1_6k',   label:'BRAW 6:1',        mbps:150,  rasters:['6K 6144×3456','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,50,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_12_1_6k',  label:'BRAW 12:1',       mbps:50,   rasters:['6K 6144×3456','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,50,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'prores_hq_6k',  label:'ProRes 422 HQ',   mbps:220,  rasters:['4K DCI 4096×2160','HD 1920×1080'],                fps:[24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
-        { id:'prores_422_6k', label:'ProRes 422',       mbps:147,  rasters:['4K DCI 4096×2160','HD 1920×1080'],                fps:[24,25,30,60], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
+        { id:'braw_3_1_6k',   label:'BRAW 3:1',        mbps:300,  rasterMbps:{'6K 6144×3456':300,'4K DCI 4096×2160':125,'HD 1920×1080':30}, rasters:['6K 6144×3456','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,50] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_6_1_6k',   label:'BRAW 6:1',        mbps:150,  rasterMbps:{'6K 6144×3456':150,'4K DCI 4096×2160':63,'HD 1920×1080':15}, rasters:['6K 6144×3456','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,50,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_12_1_6k',  label:'BRAW 12:1',       mbps:50,   rasterMbps:{'6K 6144×3456':50,'4K DCI 4096×2160':21,'HD 1920×1080':5}, rasters:['6K 6144×3456','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,50,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'prores_hq_6k',  label:'ProRes 422 HQ',   mbps:220,  rasterMbps:{'4K DCI 4096×2160':220,'HD 1920×1080':55},  rasters:['4K DCI 4096×2160','HD 1920×1080'],                fps:[24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
+        { id:'prores_422_6k', label:'ProRes 422',       mbps:147,  rasterMbps:{'4K DCI 4096×2160':147,'HD 1920×1080':37},  rasters:['4K DCI 4096×2160','HD 1920×1080'],                fps:[24,25,30,60], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
       ],
       'bmd_pocket6kpro': null, // same as 6K G2
       'bmd_pocket6k':    null, // same as 6K G2
       'bmd_pocket4k': [
-        { id:'braw_3_1_4k',   label:'BRAW 3:1',        mbps:200,  rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_6_1_4k',   label:'BRAW 6:1',        mbps:100,  rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_12_1_4k',  label:'BRAW 12:1',       mbps:50,   rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'prores_hq_4k',  label:'ProRes 422 HQ',   mbps:220,  rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
-        { id:'prores_422_4k', label:'ProRes 422',       mbps:147,  rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[24,25,30,60], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
+        { id:'braw_3_1_4k',   label:'BRAW 3:1',        mbps:200,  rasterMbps:{'4K DCI 4096×2160':200,'HD 1920×1080':49}, rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_6_1_4k',   label:'BRAW 6:1',        mbps:100,  rasterMbps:{'4K DCI 4096×2160':100,'HD 1920×1080':24}, rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_12_1_4k',  label:'BRAW 12:1',       mbps:50,   rasterMbps:{'4K DCI 4096×2160':50,'HD 1920×1080':12}, rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'prores_hq_4k',  label:'ProRes 422 HQ',   mbps:220,  rasterMbps:{'4K DCI 4096×2160':220,'HD 1920×1080':55},  rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
+        { id:'prores_422_4k', label:'ProRes 422',       mbps:147,  rasterMbps:{'4K DCI 4096×2160':147,'HD 1920×1080':37},  rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[24,25,30,60], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
       ],
       'bmd_ursamini12k': [
-        { id:'braw_3_1_u12k', label:'BRAW 3:1 12K',   mbps:900,  rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_6_1_u12k', label:'BRAW 6:1 12K',   mbps:450,  rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_12_1_u12k',label:'BRAW 12:1 12K',  mbps:225,  rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_3_1_u12k', label:'BRAW 3:1 12K',   mbps:900,  rasterMbps:{'12K 12288×6480':900,'8K 8192×4320':400,'4K DCI 4096×2160':100}, rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_6_1_u12k', label:'BRAW 6:1 12K',   mbps:450,  rasterMbps:{'12K 12288×6480':450,'8K 8192×4320':200,'4K DCI 4096×2160':50}, rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_12_1_u12k',label:'BRAW 12:1 12K',  mbps:225,  rasterMbps:{'12K 12288×6480':225,'8K 8192×4320':100,'4K DCI 4096×2160':25}, rasters:['12K 12288×6480','8K 8192×4320','4K DCI 4096×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
       ],
       'bmd_ursamini4k': [
-        { id:'braw_3_1_u4k',  label:'BRAW 3:1',        mbps:150,  rasters:['4.6K 4608×2592','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_6_1_u4k',  label:'BRAW 6:1',        mbps:75,   rasters:['4.6K 4608×2592','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'braw_12_1_u4k', label:'BRAW 12:1',       mbps:50,   rasters:['4.6K 4608×2592','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
-        { id:'prores_hq_u4k', label:'ProRes 422 HQ',   mbps:220,  rasters:['4K DCI 4096×2160','HD 1920×1080'],                  fps:[24,25,30,60], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
+        { id:'braw_3_1_u4k',  label:'BRAW 3:1',        mbps:150,  rasterMbps:{'4.6K 4608×2592':150,'4K DCI 4096×2160':111,'HD 1920×1080':26}, rasters:['4.6K 4608×2592','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_6_1_u4k',  label:'BRAW 6:1',        mbps:75,   rasterMbps:{'4.6K 4608×2592':75,'4K DCI 4096×2160':56,'HD 1920×1080':13}, rasters:['4.6K 4608×2592','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'braw_12_1_u4k', label:'BRAW 12:1',       mbps:50,   rasterMbps:{'4.6K 4608×2592':50,'4K DCI 4096×2160':37,'HD 1920×1080':9}, rasters:['4.6K 4608×2592','4K DCI 4096×2160','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Blackmagic Video']},
+        { id:'prores_hq_u4k', label:'ProRes 422 HQ',   mbps:220,  rasterMbps:{'4K DCI 4096×2160':220,'HD 1920×1080':55},  rasters:['4K DCI 4096×2160','HD 1920×1080'],                  fps:[24,25,30,60], gamma:['Blackmagic Film (Log)','Blackmagic Extended Video','Rec.709']},
       ],
     }
   },
@@ -1451,32 +1451,32 @@ const CAMERA_DB = {
     codecs: {
       'sony_venice1': [
         // Venice 1 records to external RAW recorder for X-OCN; internal is XAVC only via CBK-3610XS
-        { id:'xocn_xt',      label:'X-OCN XT (via ext. recorder)', mbps:6000, refFps:24, rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[24,25,30] , gamma:['S-Log3 / S-Gamut3.Cine']},
-        { id:'xocn_st',      label:'X-OCN ST (via ext. recorder)', mbps:3000, refFps:24, rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[24,25,30,60] , gamma:['S-Log3 / S-Gamut3.Cine']},
-        { id:'xocn_lt',      label:'X-OCN LT (via ext. recorder)', mbps:1500, refFps:24, rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[24,25,30,60] , gamma:['S-Log3 / S-Gamut3.Cine']},
-        { id:'xavc_i_4k_v1', label:'XAVC-I 4K 10-bit',            mbps:600,  rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[24,25,30], gamma:['S-Log3 / S-Gamut3.Cine', 'S-Log2 / S-Gamut', 'HLG', 'Rec.709'] , gamma:['S-Log3 / S-Gamut3.Cine','S-Log2 / S-Gamut','HLG','Rec.709']},
+        { id:'xocn_xt',      label:'X-OCN XT (via ext. recorder)', mbps:6000, refFps:24, rasterMbps:{'6K 6048×4032':6000,'4K DCI 4096×2160':2200}, rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[24,25,30] , gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xocn_st',      label:'X-OCN ST (via ext. recorder)', mbps:3000, refFps:24, rasterMbps:{'6K 6048×4032':3000,'4K DCI 4096×2160':1100}, rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[24,25,30,60] , gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xocn_lt',      label:'X-OCN LT (via ext. recorder)', mbps:1500, refFps:24, rasterMbps:{'6K 6048×4032':1500,'4K DCI 4096×2160':545}, rasters:['6K 6048×4032','4K DCI 4096×2160'], fps:[24,25,30,60] , gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xavc_i_4k_v1', label:'XAVC-I 4K 10-bit',            mbps:600,  rasterMbps:{'4K DCI 4096×2160':600,'HD 1920×1080':222},  rasters:['4K DCI 4096×2160','HD 1920×1080'], fps:[24,25,30], gamma:['S-Log3 / S-Gamut3.Cine', 'S-Log2 / S-Gamut', 'HLG', 'Rec.709'] , gamma:['S-Log3 / S-Gamut3.Cine','S-Log2 / S-Gamut','HLG','Rec.709']},
         { id:'xavc_l_4k_v1', label:'XAVC-L 4K Long GOP',          mbps:150,  rasters:['4K DCI 4096×2160'],                fps:[24,25,30], gamma:['S-Log3 / S-Gamut3.Cine', 'S-Log2 / S-Gamut', 'HLG', 'Rec.709'] , gamma:['S-Log3 / S-Gamut3.Cine','S-Log2 / S-Gamut','HLG','Rec.709']},
       ],
       'sony_venice2': [
-        { id:'xocn_xt_8k',  label:'X-OCN XT 8K',    mbps:9000, refFps:24, rasters:['8K 8640×5760','8K 8192×4320'],                   fps:[24,25,30] , gamma:['S-Log3 / S-Gamut3.Cine']},
-        { id:'xocn_st_8k',  label:'X-OCN ST 8K',    mbps:4500, refFps:24, rasters:['8K 8640×5760','8K 8192×4320'],                   fps:[24,25,30,40] , gamma:['S-Log3 / S-Gamut3.Cine']},
-        { id:'xocn_lt_8k',  label:'X-OCN LT 8K',    mbps:2200, refFps:24, rasters:['8K 8640×5760','8K 8192×4320'],                   fps:[24,25,30,40,60] , gamma:['S-Log3 / S-Gamut3.Cine']},
-        { id:'xocn_xt_6k',  label:'X-OCN XT 6K',    mbps:6000, refFps:24, rasters:['6K 6048×4032','6K 6048×3024'],                   fps:[24,25,30,48,60] , gamma:['S-Log3 / S-Gamut3.Cine']},
-        { id:'xocn_st_6k',  label:'X-OCN ST 6K',    mbps:3000, refFps:24, rasters:['6K 6048×4032','6K 6048×3024'],                   fps:[24,25,30,48,60,90] , gamma:['S-Log3 / S-Gamut3.Cine']},
-        { id:'xocn_lt_6k',  label:'X-OCN LT 6K',    mbps:1500, refFps:24, rasters:['6K 6048×4032','6K 6048×3024'],                   fps:[24,25,30,48,60,90,120] , gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xocn_xt_8k',  label:'X-OCN XT 8K',    mbps:9000, refFps:24, rasterMbps:{'8K 8640×5760':9000,'8K 8192×4320':6400}, rasters:['8K 8640×5760','8K 8192×4320'],                   fps:[24,25,30] , gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xocn_st_8k',  label:'X-OCN ST 8K',    mbps:4500, refFps:24, rasterMbps:{'8K 8640×5760':4500,'8K 8192×4320':3200}, rasters:['8K 8640×5760','8K 8192×4320'],                   fps:[24,25,30,40] , gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xocn_lt_8k',  label:'X-OCN LT 8K',    mbps:2200, refFps:24, rasterMbps:{'8K 8640×5760':2200,'8K 8192×4320':1564}, rasters:['8K 8640×5760','8K 8192×4320'],                   fps:[24,25,30,40,60] , gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xocn_xt_6k',  label:'X-OCN XT 6K',    mbps:6000, refFps:24, rasterMbps:{'6K 6048×4032':6000,'6K 6048×3024':4500}, rasters:['6K 6048×4032','6K 6048×3024'],                   fps:[24,25,30,48,60] , gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xocn_st_6k',  label:'X-OCN ST 6K',    mbps:3000, refFps:24, rasterMbps:{'6K 6048×4032':3000,'6K 6048×3024':2250}, rasters:['6K 6048×4032','6K 6048×3024'],                   fps:[24,25,30,48,60,90] , gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xocn_lt_6k',  label:'X-OCN LT 6K',    mbps:1500, refFps:24, rasterMbps:{'6K 6048×4032':1500,'6K 6048×3024':1125}, rasters:['6K 6048×4032','6K 6048×3024'],                   fps:[24,25,30,48,60,90,120] , gamma:['S-Log3 / S-Gamut3.Cine']},
         { id:'xocn_st_4k',  label:'X-OCN ST 4K DCI',mbps:2000, refFps:24, rasters:['4K DCI 4096×2160'],                              fps:[24,25,30,60,120] , gamma:['S-Log3 / S-Gamut3.Cine']},
         { id:'xocn_lt_4k',  label:'X-OCN LT 4K DCI',mbps:1000, refFps:24, rasters:['4K DCI 4096×2160'],                              fps:[24,25,30,60,120] , gamma:['S-Log3 / S-Gamut3.Cine']},
-        { id:'prores_hq_v2',label:'ProRes 422 HQ',  mbps:220,  rasters:['4K DCI 4096×2160','HD 1920×1080'],               fps:[24,25,30,60] , gamma:['S-Log3 / S-Gamut3.Cine','Rec.709']},
+        { id:'prores_hq_v2',label:'ProRes 422 HQ',  mbps:220,  rasterMbps:{'4K DCI 4096×2160':220,'HD 1920×1080':55},  rasters:['4K DCI 4096×2160','HD 1920×1080'],               fps:[24,25,30,60] , gamma:['S-Log3 / S-Gamut3.Cine','Rec.709']},
         { id:'prores_4444_v2',label:'ProRes 4444',  mbps:330,  rasters:['4K DCI 4096×2160'],                              fps:[24,25,30] , gamma:['S-Log3 / S-Gamut3.Cine','Rec.709']},
       ],
       'sony_burano': [
-        { id:'xocn_xt_bur', label:'X-OCN XT 8.6K',  mbps:8000, refFps:24, rasters:['8.6K 8640×5760','6K 6048×4032'],               fps:[24,25,30], gamma:['S-Log3 / S-Gamut3.Cine']},
-        { id:'xocn_st_bur', label:'X-OCN ST 8.6K',  mbps:4000, refFps:24, rasters:['8.6K 8640×5760','6K 6048×4032'],               fps:[24,25,30,48], gamma:['S-Log3 / S-Gamut3.Cine']},
-        { id:'xocn_lt_bur', label:'X-OCN LT 8.6K',  mbps:2000, refFps:24, rasters:['8.6K 8640×5760','6K 6048×4032','4K UHD 3840×2160','4K DCI 4096×2160'], fps:[24,25,30,48,60], gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xocn_xt_bur', label:'X-OCN XT 8.6K',  mbps:8000, refFps:24, rasterMbps:{'8.6K 8640×5760':8000,'6K 6048×4032':3920}, rasters:['8.6K 8640×5760','6K 6048×4032'],               fps:[24,25,30], gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xocn_st_bur', label:'X-OCN ST 8.6K',  mbps:4000, refFps:24, rasterMbps:{'8.6K 8640×5760':4000,'6K 6048×4032':1960}, rasters:['8.6K 8640×5760','6K 6048×4032'],               fps:[24,25,30,48], gamma:['S-Log3 / S-Gamut3.Cine']},
+        { id:'xocn_lt_bur', label:'X-OCN LT 8.6K',  mbps:2000, refFps:24, rasterMbps:{'8.6K 8640×5760':2000,'6K 6048×4032':980,'4K UHD 3840×2160':332,'4K DCI 4096×2160':356}, rasters:['8.6K 8640×5760','6K 6048×4032','4K UHD 3840×2160','4K DCI 4096×2160'], fps:[24,25,30,48,60], gamma:['S-Log3 / S-Gamut3.Cine']},
         { id:'xavc_h_8k',   label:'XAVC H 8K (H.265)',mbps:800, rasters:['8.6K 8640×5760'],                              fps:[24,25,30] , gamma:['S-Log3 / S-Gamut3.Cine','HLG','Rec.709']},
         { id:'xavc_h_4k',   label:'XAVC H 4K (H.265)',mbps:200, rasters:['4K UHD 3840×2160','4K DCI 4096×2160'],        fps:[24,25,30,60,120] , gamma:['S-Log3 / S-Gamut3.Cine','HLG','Rec.709']},
         { id:'xavc_i_bur',  label:'XAVC-I 4K 10-bit',mbps:600, rasters:['4K UHD 3840×2160','4K DCI 4096×2160'],         fps:[24,25,30,60] , gamma:['S-Log3 / S-Gamut3.Cine','HLG','Rec.709']},
-        { id:'prores_hq_bur',label:'ProRes 422 HQ',  mbps:220,  rasters:['4K DCI 4096×2160','HD 1920×1080'],             fps:[24,25,30,60] , gamma:['S-Log3 / S-Gamut3.Cine','Rec.709']},
+        { id:'prores_hq_bur',label:'ProRes 422 HQ',  mbps:220,  rasterMbps:{'4K DCI 4096×2160':220,'HD 1920×1080':55},  rasters:['4K DCI 4096×2160','HD 1920×1080'],             fps:[24,25,30,60] , gamma:['S-Log3 / S-Gamut3.Cine','Rec.709']},
       ],
       'sony_fx3': [
         { id:'xavc_si_4k_422',  label:'XAVC S-I 4K 10-bit 4:2:2',  mbps:240, rasters:['4K UHD 3840×2160'],  fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,50,60,100,120] },
@@ -1525,15 +1525,15 @@ const CAMERA_DB = {
     codecs: {
       'pan_gh7': [
         { id:'prores_raw_hq', label:'ProRes RAW HQ',    mbps:4200, refFps:24, rasters:['5.7K 5728×4280'],              fps:[24,25,30] },
-        { id:'prores_raw',    label:'ProRes RAW',        mbps:2100, refFps:24, rasters:['5.7K 5728×4280','4K DCI'],     fps:[24,25,30] },
-        { id:'prores_hq',     label:'ProRes 422 HQ',    mbps:500,  rasters:['4K DCI 4096×2160','HD'],       fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] },
-        { id:'prores_422',    label:'ProRes 422',        mbps:330,  rasters:['4K DCI 4096×2160','HD'],       fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] },
+        { id:'prores_raw',    label:'ProRes RAW',        mbps:2100, refFps:24, rasterMbps:{'5.7K 5728×4280':2100,'4K DCI':758}, rasters:['5.7K 5728×4280','4K DCI'],     fps:[24,25,30] },
+        { id:'prores_hq',     label:'ProRes 422 HQ',    mbps:500,  rasterMbps:{'4K DCI 4096×2160':500,'HD':117}, rasters:['4K DCI 4096×2160','HD'],       fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] },
+        { id:'prores_422',    label:'ProRes 422',        mbps:330,  rasterMbps:{'4K DCI 4096×2160':330,'HD':77}, rasters:['4K DCI 4096×2160','HD'],       fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] },
         { id:'h265_4k',       label:'H.265 4K 10-bit',  mbps:200,  rasters:['4K DCI 4096×2160','4K UHD'],   fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] },
         { id:'h264_4k',       label:'H.264 4K',         mbps:100,  rasters:['4K DCI 4096×2160','4K UHD'],   fps:[24,25,30,60] },
         { id:'h265_fhd_vfr',  label:'H.265 FHD VFR',   mbps:100,  rasters:['HD 1920×1080'],                fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120,180,240,300] },
       ],
       'pan_s5iix': [
-        { id:'prores_422',    label:'ProRes 422',        mbps:600,  rasters:['4K UHD 3840×2160','5.8K'],    fps:[24,25,30] },
+        { id:'prores_422',    label:'ProRes 422',        mbps:600,  rasterMbps:{'4K UHD 3840×2160':203,'5.8K':600}, rasters:['4K UHD 3840×2160','5.8K'],    fps:[24,25,30] },
         { id:'prores_lt',     label:'ProRes 422 LT',     mbps:400,  rasters:['4K UHD 3840×2160'],           fps:[24,25,30,60] },
         { id:'h265_4k',       label:'H.265 4K All-I 10-bit', mbps:600, rasters:['4K UHD 3840×2160'],        fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] },
         { id:'h264_4k',       label:'H.264 4K 10-bit',  mbps:150,  rasters:['4K UHD 3840×2160'],           fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] },
@@ -1579,9 +1579,9 @@ const CAMERA_DB = {
     },
     codecs: {
       'canon_c50': [
-        { id:'crl_hq_c50',   label:'Cinema RAW Light HQ 12-bit', mbps:1000, rasters:['7K 6768×4476 (OG)','4K DCI 4096×2160','4K UHD 3840×2160','2K 2048×1080','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut','HLG','Rec.709']},
-        { id:'crl_st_c50',   label:'Cinema RAW Light ST 12-bit', mbps:600,  rasters:['7K 6768×4476 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'],                               fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
-        { id:'crl_lt_c50',   label:'Cinema RAW Light LT 12-bit', mbps:300,  rasters:['7K 6768×4476 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'],                               fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_hq_c50',   label:'Cinema RAW Light HQ 12-bit', mbps:1000, rasterMbps:{'7K 6768×4476 (OG)':1000,'4K DCI 4096×2160':292,'4K UHD 3840×2160':274,'2K 2048×1080':73,'HD 1920×1080':68}, rasters:['7K 6768×4476 (OG)','4K DCI 4096×2160','4K UHD 3840×2160','2K 2048×1080','HD 1920×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut','HLG','Rec.709']},
+        { id:'crl_st_c50',   label:'Cinema RAW Light ST 12-bit', mbps:600,  rasterMbps:{'7K 6768×4476 (OG)':600,'4K DCI 4096×2160':175,'4K UHD 3840×2160':164}, rasters:['7K 6768×4476 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'],                               fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_lt_c50',   label:'Cinema RAW Light LT 12-bit', mbps:300,  rasterMbps:{'7K 6768×4476 (OG)':300,'4K DCI 4096×2160':88,'4K UHD 3840×2160':82}, rasters:['7K 6768×4476 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'],                               fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
         { id:'xfavc_4k_c50', label:'XF-AVC 4K 10-bit 4:2:2',    mbps:810,  rasters:['4K DCI 4096×2160','4K UHD 3840×2160'],                                                    fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120], gamma:['Canon Log 3','Canon Log 2','HLG','Rec.709']},
         { id:'xfavc_hd_c50', label:'XF-AVC HD 10-bit 4:2:2',    mbps:310,  rasters:['HD 1920×1080'],                                                                           fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120,180], gamma:['Canon Log 3','Canon Log 2','HLG','Rec.709']},
         { id:'xfhevc_c50',   label:'XF-HEVC S 4K (H.265)',       mbps:200,  rasters:['4K UHD 3840×2160'],                                                                       fps:[24,25,30,60,120] , gamma:['Canon Log 3','HLG','Rec.709']},
@@ -1594,39 +1594,39 @@ const CAMERA_DB = {
         { id:'mp4_hd_c70',   label:'MP4 HD (H.264/H.265)',       mbps:35,   rasters:['HD 1920×1080'],                                                                           fps:[24,25,30,60,120] , gamma:['Canon Log 3','HLG','Rec.709']},
       ],
       'canon_c80': [
-        { id:'crl_hq_c80',   label:'Cinema RAW Light HQ 12-bit', mbps:1300, rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'],                            fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut','HLG','Rec.709']},
-        { id:'crl_st_c80',   label:'Cinema RAW Light ST 12-bit', mbps:800,  rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'],                            fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
-        { id:'crl_lt_c80',   label:'Cinema RAW Light LT 12-bit', mbps:400,  rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'],                            fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_hq_c80',   label:'Cinema RAW Light HQ 12-bit', mbps:1300, rasterMbps:{'6K FF 6000×4000 (OG)':1300,'4K DCI 4096×2160':480,'4K UHD 3840×2160':449}, rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'],                            fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut','HLG','Rec.709']},
+        { id:'crl_st_c80',   label:'Cinema RAW Light ST 12-bit', mbps:800,  rasterMbps:{'6K FF 6000×4000 (OG)':800,'4K DCI 4096×2160':295,'4K UHD 3840×2160':276}, rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'],                            fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_lt_c80',   label:'Cinema RAW Light LT 12-bit', mbps:400,  rasterMbps:{'6K FF 6000×4000 (OG)':400,'4K DCI 4096×2160':148,'4K UHD 3840×2160':138}, rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'],                            fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
         { id:'xfavc_4k_c80', label:'XF-AVC 4K 10-bit 4:2:2',    mbps:810,  rasters:['4K DCI 4096×2160','4K UHD 3840×2160'],                                                    fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120], gamma:['Canon Log 3','Canon Log 2','HLG','Rec.709']},
         { id:'xfavc_hd_c80', label:'XF-AVC HD 10-bit 4:2:2',    mbps:310,  rasters:['HD 1920×1080'],                                                                           fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120], gamma:['Canon Log 3','Canon Log 2','HLG','Rec.709']},
         { id:'xfhevc_c80',   label:'XF-HEVC S 4K (H.265)',       mbps:200,  rasters:['4K UHD 3840×2160'],                                                                       fps:[24,25,30,60,120] },
       ],
       'canon_c300mk3': [
-        { id:'crl_hq_c3',    label:'Cinema RAW Light HQ 12-bit 1Gbps', mbps:1000, rasters:['4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
-        { id:'crl_st_c3',    label:'Cinema RAW Light ST 12-bit',       mbps:600,  rasters:['4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
-        { id:'crl_lt_c3',    label:'Cinema RAW Light LT 12-bit',       mbps:300,  rasters:['4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120,180] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_hq_c3',    label:'Cinema RAW Light HQ 12-bit 1Gbps', mbps:1000, rasterMbps:{'4K DCI 4096×2160':1000,'2K 2048×1080':250}, rasters:['4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_st_c3',    label:'Cinema RAW Light ST 12-bit',       mbps:600,  rasterMbps:{'4K DCI 4096×2160':600,'2K 2048×1080':150}, rasters:['4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_lt_c3',    label:'Cinema RAW Light LT 12-bit',       mbps:300,  rasterMbps:{'4K DCI 4096×2160':300,'2K 2048×1080':75}, rasters:['4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120,180] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
         { id:'xfavc_4k_c3',  label:'XF-AVC 4K 10-bit 4:2:2',          mbps:810,  rasters:['4K DCI 4096×2160','4K UHD 3840×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3','Canon Log 2','HLG','Rec.709']},
         { id:'xfavc_hd_c3',  label:'XF-AVC HD 10-bit 4:2:2',          mbps:310,  rasters:['HD 1920×1080'],                    fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120,180] , gamma:['Canon Log 3','Canon Log 2','HLG','Rec.709']},
-        { id:'xfavc_lgop_c3',label:'XF-AVC Long GOP 8-bit',            mbps:35,   rasters:['4K UHD 3840×2160','HD 1920×1080'], fps:[24,25,30,60] , gamma:['Canon Log 3','HLG','Rec.709']},
+        { id:'xfavc_lgop_c3',label:'XF-AVC Long GOP 8-bit',            mbps:35,   rasterMbps:{'4K UHD 3840×2160':35,'HD 1920×1080':9}, rasters:['4K UHD 3840×2160','HD 1920×1080'], fps:[24,25,30,60] , gamma:['Canon Log 3','HLG','Rec.709']},
       ],
       'canon_c400': [
-        { id:'crl_hq_c4',    label:'Cinema RAW Light HQ 12-bit', mbps:1300, rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut','HLG','Rec.709']},
-        { id:'crl_st_c4',    label:'Cinema RAW Light ST 12-bit', mbps:800,  rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
-        { id:'crl_lt_c4',    label:'Cinema RAW Light LT 12-bit', mbps:400,  rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_hq_c4',    label:'Cinema RAW Light HQ 12-bit', mbps:1300, rasterMbps:{'6K FF 6000×4000 (OG)':1300,'4K DCI 4096×2160':480,'4K UHD 3840×2160':449}, rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut','HLG','Rec.709']},
+        { id:'crl_st_c4',    label:'Cinema RAW Light ST 12-bit', mbps:800,  rasterMbps:{'6K FF 6000×4000 (OG)':800,'4K DCI 4096×2160':295,'4K UHD 3840×2160':276}, rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_lt_c4',    label:'Cinema RAW Light LT 12-bit', mbps:400,  rasterMbps:{'6K FF 6000×4000 (OG)':400,'4K DCI 4096×2160':148,'4K UHD 3840×2160':138}, rasters:['6K FF 6000×4000 (OG)','4K DCI 4096×2160','4K UHD 3840×2160'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
         { id:'crl_llt_c4',   label:'Cinema RAW Light LLT 12-bit',mbps:200,  rasters:['4K DCI 4096×2160','4K UHD 3840×2160'],                        fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
         { id:'xfavc_4k_c4',  label:'XF-AVC 4K 10-bit 4:2:2',    mbps:810,  rasters:['4K DCI 4096×2160','4K UHD 3840×2160'],                        fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3','Canon Log 2','HLG','Rec.709']},
         { id:'xfavc_hd_c4',  label:'XF-AVC HD 10-bit 4:2:2',    mbps:310,  rasters:['HD 1920×1080'],                                                fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60,120] , gamma:['Canon Log 3','Canon Log 2','HLG','Rec.709']},
         { id:'xfhevc_c4',    label:'XF-HEVC S 4K (H.265)',       mbps:200,  rasters:['4K UHD 3840×2160'],                                            fps:[24,25,30,60,120] , gamma:['Canon Log 3','HLG','Rec.709']},
       ],
       'canon_c500mk2': [
-        { id:'crl_hq_c5',    label:'Cinema RAW Light HQ 12-bit', mbps:1000, rasters:['5.9K FF 5952×3140','4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
-        { id:'crl_st_c5',    label:'Cinema RAW Light ST 12-bit', mbps:600,  rasters:['5.9K FF 5952×3140','4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
-        { id:'crl_lt_c5',    label:'Cinema RAW Light LT 12-bit', mbps:300,  rasters:['5.9K FF 5952×3140','4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_hq_c5',    label:'Cinema RAW Light HQ 12-bit', mbps:1000, rasterMbps:{'5.9K FF 5952×3140':1000,'4K DCI 4096×2160':474,'2K 2048×1080':118}, rasters:['5.9K FF 5952×3140','4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_st_c5',    label:'Cinema RAW Light ST 12-bit', mbps:600,  rasterMbps:{'5.9K FF 5952×3140':600,'4K DCI 4096×2160':284,'2K 2048×1080':71}, rasters:['5.9K FF 5952×3140','4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
+        { id:'crl_lt_c5',    label:'Cinema RAW Light LT 12-bit', mbps:300,  rasterMbps:{'5.9K FF 5952×3140':300,'4K DCI 4096×2160':142,'2K 2048×1080':35}, rasters:['5.9K FF 5952×3140','4K DCI 4096×2160','2K 2048×1080'], fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut','Canon Log 2 / Cinema Gamut']},
         { id:'xfavc_4k_c5',  label:'XF-AVC 4K 10-bit 4:2:2',    mbps:810,  rasters:['4K DCI 4096×2160','4K UHD 3840×2160'],                  fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3','Canon Log 2','HLG','Rec.709']},
         { id:'xfavc_hd_c5',  label:'XF-AVC HD 10-bit 4:2:2',    mbps:310,  rasters:['HD 1920×1080'],                                         fps:[1,2,3,4,5,6,7,8,10,12,15,20,24,25,30,60] , gamma:['Canon Log 3','Canon Log 2','HLG','Rec.709']},
       ],
       'canon_r5c': [
-        { id:'rawlt_r5c',    label:'Cinema RAW Light 12-bit',    mbps:2600, rasters:['8K 8192×4320','4K DCI 4096×2160'],        fps:[24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut']},
+        { id:'rawlt_r5c',    label:'Cinema RAW Light 12-bit',    mbps:2600, rasterMbps:{'8K 8192×4320':2600,'4K DCI 4096×2160':650}, rasters:['8K 8192×4320','4K DCI 4096×2160'],        fps:[24,25,30,60] , gamma:['Canon Log 3 / Cinema Gamut']},
         { id:'xfavc_8k_r5c', label:'XF-AVC 8K 10-bit 4:2:2',   mbps:2600, rasters:['8K 8192×4320'],                           fps:[24,25,30], gamma:['Canon Log 3 / Cinema Gamut', 'HLG', 'Rec.709'] , gamma:['Canon Log 3 / Cinema Gamut','HLG','Rec.709']},
         { id:'xfavc_4k_r5c', label:'XF-AVC 4K 10-bit 4:2:2',   mbps:810,  rasters:['4K DCI 4096×2160','4K UHD 3840×2160'],   fps:[24,25,30,60,120], gamma:['Canon Log 3', 'HLG', 'Rec.709'] , gamma:['Canon Log 3','HLG','Rec.709']},
         { id:'xfavc_hd_r5c', label:'XF-AVC HD 10-bit 4:2:2',   mbps:310,  rasters:['HD 1920×1080'],                           fps:[24,25,30,60,120], gamma:['Canon Log 3', 'HLG', 'Rec.709'] , gamma:['Canon Log 3','HLG','Rec.709']},
@@ -1648,36 +1648,36 @@ const CAMERA_DB = {
     },
     codecs: {
       'arri_alexa35_xtreme': [
-        { id:'arriraw_35x',      label:'ARRIRAW',          mbps:4500, refFps:24, rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[1,24,25,30,40,60,120,200,300,660] , gamma:['LogC4 / AWG4']},
-        { id:'arricore_35x',     label:'ArriCore',         mbps:2000, refFps:24, rasters:['4.6K S35 Open Gate','4K S35'],           fps:[24,25,30,40,60,120,200] , gamma:['LogC4 / AWG4']},
-        { id:'prores_4444xq_35x',label:'ProRes 4444 XQ',  mbps:500,  rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90,120] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
-        { id:'prores_4444_35x',  label:'ProRes 4444',      mbps:330,  rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90,120] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
-        { id:'prores_hq_35x',    label:'ProRes 422 HQ',   mbps:220,  rasters:['4K S35','2K S35','HD 1920×1080'],         fps:[24,25,30,60,120] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
+        { id:'arriraw_35x',      label:'ARRIRAW',          mbps:4500, refFps:24, rasterMbps:{'4.6K S35 Open Gate':4500,'4K S35':4000,'2K S35':1100}, rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[1,24,25,30,40,60,120,200,300,660] , gamma:['LogC4 / AWG4']},
+        { id:'arricore_35x',     label:'ArriCore',         mbps:2000, refFps:24, rasterMbps:{'4.6K S35 Open Gate':2000,'4K S35':1294}, rasters:['4.6K S35 Open Gate','4K S35'],           fps:[24,25,30,40,60,120,200] , gamma:['LogC4 / AWG4']},
+        { id:'prores_4444xq_35x',label:'ProRes 4444 XQ',  mbps:500,  rasterMbps:{'4.6K S35 Open Gate':560,'4K S35':500,'2K S35':130},  rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90,120] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
+        { id:'prores_4444_35x',  label:'ProRes 4444',      mbps:330,  rasterMbps:{'4.6K S35 Open Gate':370,'4K S35':330,'2K S35':85},   rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90,120] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
+        { id:'prores_hq_35x',    label:'ProRes 422 HQ',   mbps:220,  rasterMbps:{'4.6K S35 Open Gate':250,'4K S35':220,'2K S35':58,'HD 1920×1080':55},   rasters:['4K S35','2K S35','HD 1920×1080'],         fps:[24,25,30,60,120] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
       ],
       'arri_alexa35': [
-        { id:'arriraw_35',       label:'ARRIRAW',          mbps:4000, refFps:24, rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[1,24,25,30,40,60,120] , gamma:['LogC4 / AWG4']},
-        { id:'prores_4444xq_35', label:'ProRes 4444 XQ',  mbps:500,  rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
-        { id:'prores_4444_35',   label:'ProRes 4444',      mbps:330,  rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
-        { id:'prores_hq_35',     label:'ProRes 422 HQ',   mbps:220,  rasters:['4K S35','2K S35','HD 1920×1080'],         fps:[24,25,30,60] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
+        { id:'arriraw_35',       label:'ARRIRAW',          mbps:4000, refFps:24, rasterMbps:{'4.6K S35 Open Gate':4500,'4K S35':4000,'2K S35':1100}, rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[1,24,25,30,40,60,120] , gamma:['LogC4 / AWG4']},
+        { id:'prores_4444xq_35', label:'ProRes 4444 XQ',  mbps:500,  rasterMbps:{'4.6K S35 Open Gate':560,'4K S35':500,'2K S35':130},  rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
+        { id:'prores_4444_35',   label:'ProRes 4444',      mbps:330,  rasterMbps:{'4.6K S35 Open Gate':370,'4K S35':330,'2K S35':85},   rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
+        { id:'prores_hq_35',     label:'ProRes 422 HQ',   mbps:220,  rasterMbps:{'4.6K S35 Open Gate':250,'4K S35':220,'2K S35':58,'HD 1920×1080':55},   rasters:['4K S35','2K S35','HD 1920×1080'],         fps:[24,25,30,60] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
       ],
       'arri_alexa35_entry': [
         // Entry: ARRIRAW requires upgrade license; ProRes available base
-        { id:'prores_4444xq_e',  label:'ProRes 4444 XQ',  mbps:500,  rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
-        { id:'prores_4444_e',    label:'ProRes 4444',      mbps:330,  rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
-        { id:'prores_hq_e',      label:'ProRes 422 HQ',   mbps:220,  rasters:['4K S35','2K S35','HD 1920×1080'],         fps:[24,25,30,60] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
-        { id:'arriraw_e',        label:'ARRIRAW (license req.)', mbps:4000, refFps:24, rasters:['4.6K S35 Open Gate','4K S35'], fps:[1,24,25,30,40,60] , gamma:['LogC4 / AWG4']},
+        { id:'prores_4444xq_e',  label:'ProRes 4444 XQ',  mbps:500,  rasterMbps:{'4.6K S35 Open Gate':560,'4K S35':500,'2K S35':130},  rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
+        { id:'prores_4444_e',    label:'ProRes 4444',      mbps:330,  rasterMbps:{'4.6K S35 Open Gate':370,'4K S35':330,'2K S35':85},   rasters:['4.6K S35 Open Gate','4K S35','2K S35'],  fps:[24,25,30,40,60,90] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
+        { id:'prores_hq_e',      label:'ProRes 422 HQ',   mbps:220,  rasterMbps:{'4.6K S35 Open Gate':250,'4K S35':220,'2K S35':58,'HD 1920×1080':55},   rasters:['4K S35','2K S35','HD 1920×1080'],         fps:[24,25,30,60] , gamma:['LogC4 / AWG4','LogC3 / AWG3','Rec.709']},
+        { id:'arriraw_e',        label:'ARRIRAW (license req.)', mbps:4000, refFps:24, rasterMbps:{'4.6K S35 Open Gate':4500,'4K S35':4000}, rasters:['4.6K S35 Open Gate','4K S35'], fps:[1,24,25,30,40,60] , gamma:['LogC4 / AWG4']},
       ],
       'arri_265': [
-        { id:'arriraw_265',      label:'ARRIRAW 65mm',     mbps:6000, refFps:24, rasters:['5.8K 65mm 5760×3240','4K 65mm'],  fps:[0.75,24,25,30,40,60,90] , gamma:['LogC3 / AWG3']},
-        { id:'prores_4444xq_265',label:'ProRes 4444 XQ',  mbps:500,  rasters:['5.8K 65mm 5760×3240','4K 65mm'],         fps:[24,25,30,40,60,90] , gamma:['LogC3 / AWG3','Rec.709']},
-        { id:'prores_4444_265',  label:'ProRes 4444',      mbps:330,  rasters:['5.8K 65mm 5760×3240','4K 65mm'],         fps:[24,25,30,40,60,90] , gamma:['LogC3 / AWG3','Rec.709']},
-        { id:'prores_hq_265',    label:'ProRes 422 HQ',   mbps:220,  rasters:['4K 65mm','HD 1920×1080'],                fps:[24,25,30,60] , gamma:['LogC3 / AWG3','Rec.709']},
+        { id:'arriraw_265',      label:'ARRIRAW 65mm',     mbps:6000, refFps:24, rasterMbps:{'5.8K 65mm 5760×3240':6000,'4K 65mm':4040}, rasters:['5.8K 65mm 5760×3240','4K 65mm'],  fps:[0.75,24,25,30,40,60,90] , gamma:['LogC3 / AWG3']},
+        { id:'prores_4444xq_265',label:'ProRes 4444 XQ',  mbps:500,  rasterMbps:{'5.8K 65mm 5760×3240':500,'4K 65mm':337}, rasters:['5.8K 65mm 5760×3240','4K 65mm'],         fps:[24,25,30,40,60,90] , gamma:['LogC3 / AWG3','Rec.709']},
+        { id:'prores_4444_265',  label:'ProRes 4444',      mbps:330,  rasterMbps:{'5.8K 65mm 5760×3240':330,'4K 65mm':222}, rasters:['5.8K 65mm 5760×3240','4K 65mm'],         fps:[24,25,30,40,60,90] , gamma:['LogC3 / AWG3','Rec.709']},
+        { id:'prores_hq_265',    label:'ProRes 422 HQ',   mbps:220,  rasterMbps:{'4K 65mm':220,'HD 1920×1080':55},  rasters:['4K 65mm','HD 1920×1080'],                fps:[24,25,30,60] , gamma:['LogC3 / AWG3','Rec.709']},
       ],
       'arri_mini_lf': [
-        { id:'arriraw_lf',       label:'ARRIRAW LF',       mbps:3000, refFps:24, rasters:['4.5K LF 4448×3096','2.8K S35'], fps:[0.75,24,25,30,40,60,90] , gamma:['LogC3 / AWG3']},
-        { id:'prores_4444xq_lf', label:'ProRes 4444 XQ',  mbps:500,  rasters:['4.5K LF 4448×3096','2.8K S35'],         fps:[24,25,30,40,60,90] , gamma:['LogC3 / AWG3','Rec.709']},
-        { id:'prores_4444_lf',   label:'ProRes 4444',      mbps:330,  rasters:['4.5K LF 4448×3096','2.8K S35'],         fps:[24,25,30,40,60,90] , gamma:['LogC3 / AWG3','Rec.709']},
-        { id:'prores_hq_lf',     label:'ProRes 422 HQ',   mbps:220,  rasters:['4.5K LF 4448×3096','2.8K S35'],         fps:[24,25,30,40,60] , gamma:['LogC3 / AWG3','Rec.709']},
+        { id:'arriraw_lf',       label:'ARRIRAW LF',       mbps:3000, refFps:24, rasterMbps:{'4.5K LF 4448×3096':3000,'2.8K S35':800}, rasters:['4.5K LF 4448×3096','2.8K S35'], fps:[0.75,24,25,30,40,60,90] , gamma:['LogC3 / AWG3']},
+        { id:'prores_4444xq_lf', label:'ProRes 4444 XQ',  mbps:500,  rasterMbps:{'4.5K LF 4448×3096':500,'2.8K S35':130},  rasters:['4.5K LF 4448×3096','2.8K S35'],         fps:[24,25,30,40,60,90] , gamma:['LogC3 / AWG3','Rec.709']},
+        { id:'prores_4444_lf',   label:'ProRes 4444',      mbps:330,  rasterMbps:{'4.5K LF 4448×3096':330,'2.8K S35':85},   rasters:['4.5K LF 4448×3096','2.8K S35'],         fps:[24,25,30,40,60,90] , gamma:['LogC3 / AWG3','Rec.709']},
+        { id:'prores_hq_lf',     label:'ProRes 422 HQ',   mbps:220,  rasterMbps:{'4.5K LF 4448×3096':220,'2.8K S35':58},  rasters:['4.5K LF 4448×3096','2.8K S35'],         fps:[24,25,30,40,60] , gamma:['LogC3 / AWG3','Rec.709']},
       ],
     }
   },
@@ -1736,7 +1736,7 @@ const CAMERA_DB = {
         { id:'h265_1080',    label:'H.265 1080p',            mbps:50,  rasters:['HD 1920×1080'],      fps:[24,25,30,60,120] },
       ],
       'dji_mavic3pro': [
-        { id:'h265_4k_hq',   label:'H.265 4K 60fps 10-bit',  mbps:200, rasters:['4K UHD 3840×2160','5.1K'], fps:[24,25,30,60] },
+        { id:'h265_4k_hq',   label:'H.265 4K 60fps 10-bit',  mbps:200, rasterMbps:{'4K UHD 3840×2160':120,'5.1K':200}, rasters:['4K UHD 3840×2160','5.1K'], fps:[24,25,30,60] },
         { id:'h265_4k',      label:'H.265 4K',               mbps:100, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60] },
         { id:'h264_4k',      label:'H.264 4K',               mbps:100, rasters:['4K UHD 3840×2160'], fps:[24,25,30,60] },
       ],
@@ -2412,7 +2412,16 @@ function getCodecMbps(cam) {
   const codec  = codecs.find(c => c.id === cam.codecId);
   if (!codec) return 0;
   // RAW codecs store mbps at refFps — scale linearly with actual fps
-  if (codec.refFps && cam.fps) return codec.mbps * (cam.fps / codec.refFps);
+  if (codec.refFps && cam.fps) {
+    const base = (codec.rasterMbps && cam.rasterId && codec.rasterMbps[cam.rasterId])
+      ? codec.rasterMbps[cam.rasterId]
+      : codec.mbps;
+    return base * (cam.fps / codec.refFps);
+  }
+  // Per-raster override
+  if (codec.rasterMbps && cam.rasterId && codec.rasterMbps[cam.rasterId]) {
+    return codec.rasterMbps[cam.rasterId];
+  }
   return codec.mbps;
 }
 

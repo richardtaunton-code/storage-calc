@@ -1,3 +1,33 @@
+// ── FREE VERSION ────────────────────────────────────
+const FREE_VERSION = true;
+
+function lockGate() {
+  var el = document.getElementById('lock-gate-overlay');
+  if (el) { el.style.display = 'flex'; return; }
+  el = document.createElement('div');
+  el.id = 'lock-gate-overlay';
+  el.style.cssText = 'position:fixed;inset:0;z-index:99998;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,0.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)';
+  el.onclick = function(e){ if(e.target===el) dismissLockGate(); };
+  el.innerHTML = `
+    <div id="lock-gate-sheet" style="background:var(--bg2);border-radius:20px 20px 0 0;padding:20px 24px max(32px,env(safe-area-inset-bottom));width:100%;max-width:500px;animation:instrSlideUp 0.32s cubic-bezier(0.32,0.72,0,1) both">
+      <div style="width:36px;height:4px;background:var(--fill);border-radius:2px;margin:0 auto 20px"></div>
+      <div style="font-size:40px;text-align:center;margin-bottom:12px">🔒</div>
+      <div style="font-size:19px;font-weight:700;text-align:center;margin-bottom:8px">Pro Feature</div>
+      <div style="font-size:14px;color:var(--label2);text-align:center;line-height:1.5;margin-bottom:24px">This feature is available in the full version of Broadcast Storage Calculator.</div>
+      <a href="https://apps.apple.com/gb/app/broadcast-storage-calc/id6783405682" target="_blank" style="display:block;text-align:center;background:var(--blue);color:#fff;font-family:var(--font);font-size:17px;font-weight:600;text-decoration:none;border-radius:13px;padding:14px 20px;margin-bottom:10px">Get on the App Store</a>
+      <button onclick="dismissLockGate()" style="display:block;width:100%;text-align:center;background:var(--fill3);color:var(--label);font-family:var(--font);font-size:17px;font-weight:500;border:none;border-radius:13px;padding:14px 20px;cursor:pointer">Not Now</button>
+    </div>`;
+  document.body.appendChild(el);
+}
+
+function dismissLockGate() {
+  var el = document.getElementById('lock-gate-overlay');
+  if (!el) return;
+  el.style.opacity = '0';
+  el.style.transition = 'opacity 0.2s ease';
+  setTimeout(function(){ el.remove(); }, 220);
+}
+
 // ── SPLASH ──────────────────────────────────────────
 (function(){
   var splash = document.getElementById('bsc-splash');
@@ -139,9 +169,9 @@ const CAMERA_DB = {
   'sony': {
     brand: 'Sony', emoji: '🎥',
     models: {
-      'sony_venice1': { name: 'VENICE (1)',  card: 'AXS Memory Card',            cardSizes: [256,512],              cardReadMB: 2500 },
-      'sony_venice2': { name: 'VENICE 2',    card: 'AXS Memory Card (S48/S66)',  cardSizes: [512,1000],             cardReadMB: 2800 },
-      'sony_burano':  { name: 'BURANO',      card: 'CFexpress Type B',           cardSizes: [960,1920],             cardReadMB: 1800 },
+      'sony_venice1': { name: 'VENICE (1)',  card: 'AXS Memory Card',            cardSizes: [256,512],      cardReadMB: 2500 },
+      'sony_venice2': { name: 'VENICE 2',    card: 'AXS Memory Card (S48/S66)',  cardSizes: [512,1000],     cardReadMB: 2800 },
+      'sony_burano':  { name: 'BURANO',      card: 'CFexpress Type B',           cardSizes: [960,1920],     cardReadMB: 1800 },
       'sony_fx3':  { name: 'FX3',   card: 'CFexpress Type A / SD UHS-II', cardSizes: [80,160,320,640,960,1920], cardReadMB: 800 },
       'sony_fx6':  { name: 'FX6',   card: 'CFexpress Type A / SD UHS-II', cardSizes: [80,160,320,640,960,1920], cardReadMB: 800 },
       'sony_fx9':  { name: 'FX9',   card: 'XQD / CFexpress Type B',       cardSizes: [120,240,480,960],          cardReadMB: 1000 },
@@ -459,23 +489,19 @@ function resolveCodecs(brandKey, modelKey) {
 // SSD DATA
 // ─────────────────────────────────────────────────────────────
 const SSDS = [
-  // Samsung
-  { id:'t9_1tb_usb',      name:'Samsung T9 1TB',              iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:1000 },
-  { id:'t9_2tb_usb',      name:'Samsung T9 2TB',              iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:2000 },
-  { id:'t9_4tb_usb',      name:'Samsung T9 4TB',              iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:4000 },
-  // SanDisk
-  { id:'sdex_1tb_usb',    name:'SanDisk Extreme 1TB',         iface:'USB 3.2 Gen 2',   readMB:1050, capGB:1000 },
-  { id:'sdex_2tb_usb',    name:'SanDisk Extreme 2TB',         iface:'USB 3.2 Gen 2',   readMB:1050, capGB:2000 },
-  { id:'sdexp_1tb_usb',   name:'SanDisk Extreme PRO 1TB',     iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:1000 },
-  { id:'sdexp_2tb_usb',   name:'SanDisk Extreme PRO 2TB',     iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:2000 },
-  { id:'sdpro_g40_2tb_tb',name:'SanDisk PRO-G40 2TB',         iface:'Thunderbolt 3',   readMB:2700, capGB:2000 },
-  { id:'sdpro_g40_4tb_tb',name:'SanDisk PRO-G40 4TB',         iface:'Thunderbolt 3',   readMB:3000, capGB:4000 },
-  // OWC
-  { id:'owc_envoy_2tb_tb', name:'OWC Envoy Pro FX 2TB',       iface:'Thunderbolt 4',   readMB:2800, capGB:2000 },
-  { id:'owc_envoy_4tb_tb', name:'OWC Envoy Pro FX 4TB',       iface:'Thunderbolt 4',   readMB:2800, capGB:4000 },
-  // LaCie
-  { id:'lacie_pro5_2tb_tb',name:'LaCie Rugged SSD Pro5 2TB',  iface:'Thunderbolt 5',   readMB:6700, capGB:2000 },
-  { id:'lacie_pro5_4tb_tb',name:'LaCie Rugged SSD Pro5 4TB',  iface:'Thunderbolt 5',   readMB:6700, capGB:4000 },
+  { id:'t9_1tb_usb',       name:'Samsung T9 1TB',              iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:1000 },
+  { id:'t9_2tb_usb',       name:'Samsung T9 2TB',              iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:2000 },
+  { id:'t9_4tb_usb',       name:'Samsung T9 4TB',              iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:4000 },
+  { id:'sdex_1tb_usb',     name:'SanDisk Extreme 1TB',         iface:'USB 3.2 Gen 2',   readMB:1050, capGB:1000 },
+  { id:'sdex_2tb_usb',     name:'SanDisk Extreme 2TB',         iface:'USB 3.2 Gen 2',   readMB:1050, capGB:2000 },
+  { id:'sdexp_1tb_usb',    name:'SanDisk Extreme PRO 1TB',     iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:1000 },
+  { id:'sdexp_2tb_usb',    name:'SanDisk Extreme PRO 2TB',     iface:'USB 3.2 Gen 2x2', readMB:2000, capGB:2000 },
+  { id:'sdpro_g40_2tb_tb', name:'SanDisk PRO-G40 2TB',         iface:'Thunderbolt 3',   readMB:2700, capGB:2000 },
+  { id:'sdpro_g40_4tb_tb', name:'SanDisk PRO-G40 4TB',         iface:'Thunderbolt 3',   readMB:3000, capGB:4000 },
+  { id:'owc_envoy_2tb_tb', name:'OWC Envoy Pro FX 2TB',        iface:'Thunderbolt 4',   readMB:2800, capGB:2000 },
+  { id:'owc_envoy_4tb_tb', name:'OWC Envoy Pro FX 4TB',        iface:'Thunderbolt 4',   readMB:2800, capGB:4000 },
+  { id:'lacie_pro5_2tb_tb',name:'LaCie Rugged SSD Pro5 2TB',   iface:'Thunderbolt 5',   readMB:6700, capGB:2000 },
+  { id:'lacie_pro5_4tb_tb',name:'LaCie Rugged SSD Pro5 4TB',   iface:'Thunderbolt 5',   readMB:6700, capGB:4000 },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -531,6 +557,7 @@ function ssdChanged() {
 // CAMERA MANAGEMENT
 // ─────────────────────────────────────────────────────────────
 function addCamera() {
+  if (cameras.length >= 1) { lockGate(); return; }
   const id = ++camId;
   cameras.push({ id, brandKey:'', modelKey:'', codecId:'', rasterId:'', fps:25, cardGB:0, collapsed:false, numCameras:1, customMbps:100, bitDepth:'', colourSpace:'', gamma:'' });
   renderCameras();
@@ -859,15 +886,6 @@ function renderCameraCard(cam) {
     </div>
 
     ${cam.brandKey === 'generic' ? `
-    <div class="list-row select-row" style="${showRaster?'':'opacity:0.35;pointer-events:none'}">
-      <div class="row-icon" style="background:rgba(255,159,10,0.2)">🖥</div>
-      <div class="row-content"><div class="row-label">Raster</div></div>
-      <div class="row-value" style="font-size:14px">${rasterLabel}</div>
-      <select class="select-overlay" id="raster-${cam.id}" onchange="camRasterChanged(${cam.id})" ${showRaster?'':'disabled'}>
-        ${rasterSelectForModelHTML(cam.brandKey, cam.modelKey, cam.codecId, cam.rasterId)}
-      </select>
-    </div>
-
     <div class="list-row" style="${showRaster?'':'opacity:0.35;pointer-events:none'};border-top:0.5px solid var(--separator2)">
       <div class="row-icon" style="background:rgba(10,132,255,0.2)">📡</div>
       <div class="row-content">
@@ -926,13 +944,13 @@ function renderCameraCard(cam) {
       <div class="row-content"><div class="row-label">Codec</div></div>
       <div class="row-value" style="font-size:14px;max-width:180px;text-align:right;line-height:1.3">${codecLabel}</div>
       <select class="select-overlay" id="codec-${cam.id}" onchange="camCodecChanged(${cam.id})" ${showCodec?'':'disabled'}>
-        ${codecSelectHTML(cam.brandKey, cam.modelKey, '', cam.codecId)}
+        ${codecSelectHTML(cam.brandKey, cam.modelKey, cam.rasterId, cam.codecId)}
       </select>
     </div>
 
     ${gammaRowHTML}
 
-    <div class="list-row select-row" style="border-top:0.5px solid var(--separator2);${showRaster?'':'opacity:0.35;pointer-events:none'}">
+    <div class="list-row select-row" style="${showRaster?'':'opacity:0.35;pointer-events:none'};border-top:0.5px solid var(--separator2)">
       <div class="row-icon" style="background:rgba(255,159,10,0.2)">🖥</div>
       <div class="row-content"><div class="row-label">Raster</div></div>
       <div class="row-value" style="font-size:14px">${rasterLabel}</div>
@@ -2118,9 +2136,9 @@ function calcMC() {
 
       ${readyOutputs.length > 1 ? '' : ''}`; // Recording params ends here
 
-    // VERSION 14 — FULLY UNLOCKED (no paywall)
+    // Free version: Multi TB is locked
     const paywallSection = readyOutputs.length > 0 ? `
-      <div style="border-top:0.5px solid var(--separator2)">
+      <div style="border-top:0.5px solid var(--separator2);position:relative">
         <div style="padding:14px 16px 4px"><div class="divider-label">Storage Required</div></div>
         <div style="background:rgba(191,90,242,0.05);padding:6px 16px 8px">
           <div style="font-size:11px;color:var(--label3);margin-bottom:8px">Signal: ${variant?.label} · ${MC_BIT_DEPTHS.find(b=>b.id===mc.bitDepth)?.label} · Incoming: ${mc.rasterId}</div>
@@ -2128,36 +2146,23 @@ function calcMC() {
             const codec     = MC_CODECS.find(c => c.id === out.codecId);
             const container = MC_CONTAINERS.find(c => c.id === out.containerId);
             const channels  = out.channels || 1;
-            const mbps      = codec ? (codec.vbr ? ((out.vbrKbps || codec.baseMbps * 1000) / 1000) : codec.baseMbps) : 0;
-            const rawGBhr   = mbps * channels * 3600 / 8 / 1024;
-            const rawGB     = rawGBhr * MG.hours * MG.days;
-            const redGB     = rawGB * MG.redund * MG.overhead;
-            const hero      = fmtStorage(redGB);
-            const raw       = fmtStorage(rawGB);
             return `
             <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;${oi>0?'border-top:0.5px solid var(--separator2)':''}">
               <div>
                 <div style="font-size:13px;font-weight:600;color:var(--purple)">Output ${oi+1}</div>
                 <div style="font-size:11px;color:var(--label3)">${container?.label||''} · ${codec?.label||''} · ${out.rasterId||''} · ${channels} ch${channels!==1?'s':''}</div>
-                <div style="font-size:11px;color:var(--label3)">Raw: ${raw.val} ${raw.unit}</div>
               </div>
-              <div style="text-align:right">
-                <div style="font-size:22px;font-weight:700;color:var(--green);font-variant-numeric:tabular-nums">${hero.val} <span style="font-size:13px;font-weight:400;color:var(--label2)">${hero.unit}</span></div>
+              <div style="text-align:right;filter:blur(5px);pointer-events:none">
+                <div style="font-size:22px;font-weight:700;color:var(--green);font-variant-numeric:tabular-nums">0.00 TB</div>
                 <div style="font-size:11px;color:var(--label3)">with redundancy</div>
               </div>
             </div>`;
           }).join('')}
         </div>
-      </div>
-      <div style="border-top:0.5px solid var(--separator2)">
-        <div style="padding:14px 16px 4px"><div class="divider-label">Combined Total — All Outputs</div></div>
-        <div style="padding:12px 16px 16px;text-align:center;background:linear-gradient(160deg,rgba(191,90,242,0.12) 0%,rgba(48,209,88,0.06) 100%)">
-          <div style="font-size:12px;color:var(--label2);margin-bottom:8px">${readyOutputs.length} output${readyOutputs.length!==1?'s':''} · ×${MG.redund} redundancy · +${((MG.overhead-1)*100).toFixed(0)}% overhead</div>
-          <div style="display:flex;align-items:baseline;justify-content:center;gap:6px;margin-bottom:6px">
-            <div style="font-size:44px;font-weight:700;letter-spacing:-1px;color:var(--green);font-variant-numeric:tabular-nums">${grandHero.val}</div>
-            <div style="font-size:22px;color:var(--label2)">${grandHero.unit}</div>
-          </div>
-          <div style="font-size:12px;color:var(--label3)">Raw total: ${grandRaw.val} ${grandRaw.unit}</div>
+        <div onclick="lockGate()" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(0,0,0,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);cursor:pointer">
+          <div style="font-size:20px">🔒</div>
+          <div style="font-size:13px;font-weight:600;color:#fff">Pro Feature</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.6)">Tap for full access</div>
         </div>
       </div>` : `
       <div style="border-top:0.5px solid var(--separator2);padding:14px 16px;text-align:center">
@@ -2315,26 +2320,8 @@ function renderTotals() {
   const grandRaw    = engRawGB;
   const grandRedund = engRedundGB;
 
-  // Multicam totals
-  let mcRawGB = 0, mcRedundGB = 0, mcRows = [];
-  multicams.forEach((mc, i) => {
-    if (!mc.signalType || !mc.variantId || !mc.bitDepth || !mc.rasterId) return;
-    const readyOutputs = mc.outputs.filter(o => o.containerId && o.codecId && o.rasterId);
-    if (!readyOutputs.length) return;
-    let feedRaw = 0, feedRedund = 0;
-    readyOutputs.forEach(out => {
-      const codec   = MC_CODECS.find(c => c.id === out.codecId);
-      const channels = out.channels || 1;
-      const mbps    = codec ? (codec.vbr ? ((out.vbrKbps || codec.baseMbps * 1000) / 1000) : codec.baseMbps) : 0;
-      const rawGB   = mbps * channels * 3600 / 8 / 1024 * MG.hours * MG.days;
-      const redGB   = rawGB * MG.redund * MG.overhead;
-      feedRaw    += rawGB;
-      feedRedund += redGB;
-    });
-    mcRawGB    += feedRaw;
-    mcRedundGB += feedRedund;
-    mcRows.push({ name: `Feed ${i+1} — ${MC_SIGNALS[mc.signalType]?.label||''}`, raw: feedRaw, redund: feedRedund, outputs: readyOutputs.length });
-  });
+  // Free version: multicam does not contribute to the Totals tab
+  const mcRawGB = 0, mcRedundGB = 0, mcRows = [];
 
   const combinedRaw    = engRawGB + mcRawGB;
   const combinedRedund = engRedundGB + mcRedundGB;
@@ -2421,7 +2408,7 @@ function renderTotals() {
         </div>
         <div id="totals-breakdown" style="display:none">
           ${engRows.length ? `<div style="padding:8px 16px 4px;font-size:11px;font-weight:600;color:var(--label3);text-transform:uppercase;letter-spacing:0.06em">ENG Cameras</div>${breakdownRows}` : ''}
-          ${mcRows.length ? `<div style="padding:8px 16px 4px;font-size:11px;font-weight:600;color:var(--label3);text-transform:uppercase;letter-spacing:0.06em;border-top:0.5px solid var(--separator2)">Multicam Record</div>${mcBreakdownRows}` : ''}
+          ${mcRows.length ? `<div style="padding:8px 16px 4px;font-size:11px;font-weight:600;color:var(--label3);text-transform:uppercase;letter-spacing:0.06em;border-top:0.5px solid var(--separator2)">Multicam Record</div><div style="position:relative">${mcBreakdownRows}<div onclick="lockGate()" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);cursor:pointer"><div style="font-size:20px">🔒</div><div style="font-size:13px;font-weight:600;color:#fff">Pro Feature</div><div style="font-size:11px;color:rgba(255,255,255,0.6)">Tap for full access</div></div></div>` : ''}
           <div style="height:4px"></div>
         </div>
       </div>
@@ -2436,10 +2423,13 @@ function renderTotals() {
           <div style="font-size:28px;font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums">${totalCamCount}</div>
           <div style="font-size:12px;color:var(--label3);margin-top:3px">${engCount} card${engCount!==1?'s':''} · ${totalCamCount} camera${totalCamCount!==1?'s':''}</div>
         </div>
-        <div style="padding:16px;border-bottom:0.5px solid var(--separator2)">
-          <div style="font-size:11px;font-weight:600;color:var(--label2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Multicam ISOs</div>
-          <div style="font-size:28px;font-weight:700;color:var(--purple);font-variant-numeric:tabular-nums">${totalIsoCount > 0 ? totalIsoCount : '—'}</div>
-          <div style="font-size:12px;color:var(--label3);margin-top:3px">${totalIsoCount > 0 ? `${totalIsoCount} ISO stream${totalIsoCount!==1?'s':''}` : 'not configured'}</div>
+        <div onclick="lockGate()" style="padding:16px;border-bottom:0.5px solid var(--separator2);position:relative;cursor:pointer">
+          <div style="filter:blur(4px);pointer-events:none">
+            <div style="font-size:11px;font-weight:600;color:var(--label2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Multicam ISOs</div>
+            <div style="font-size:28px;font-weight:700;color:var(--purple);font-variant-numeric:tabular-nums">—</div>
+            <div style="font-size:12px;color:var(--label3);margin-top:3px">pro feature</div>
+          </div>
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><div style="font-size:18px">🔒</div></div>
         </div>
         <div style="padding:16px;border-right:0.5px solid var(--separator2);border-bottom:0.5px solid var(--separator2)">
           <div style="font-size:11px;font-weight:600;color:var(--label2);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px">Redundancy</div>
@@ -2491,6 +2481,7 @@ function updateGrandTotal() {
     engCount++;
   });
 
+  // Free version: multicam does not contribute to the nav total
   let mcRedundGB = 0;
   multicams.forEach(mc => {
     if (!mc.signalType || !mc.variantId || !mc.bitDepth || !mc.rasterId) return;

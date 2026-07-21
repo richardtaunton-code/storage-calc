@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Storage Calc">
+<meta name="theme-color" content="#1c1c1e">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='38' fill='%231c1c1e'/%3E%3Crect x='44' y='54' width='56' height='72' rx='6' fill='none' stroke='%2330d158' stroke-width='5'/%3E%3Crect x='56' y='70' width='32' height='4' rx='2' fill='%2330d158'/%3E%3Crect x='56' y='82' width='24' height='4' rx='2' fill='%2330d158' opacity='.6'/%3E%3Crect x='56' y='94' width='28' height='4' rx='2' fill='%2330d158' opacity='.4'/%3E%3Cpath d='M108 100 L136 100 M122 86 L136 100 L122 114' stroke='%230a84ff' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<title>Broadcast Storage Calculator</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- ═══════════════════════════════════════════════
+     SPLASH SCREEN  v17
+════════════════════════════════════════════════ -->
+<div id="bsc-splash" style="position:fixed;inset:0;z-index:99999;background:#000;overflow:hidden;">
+  <div style="position:absolute;inset:0;background-image:url('splash-bg-main.jpg');background-size:cover;background-position:center 60%;animation:bscPush 2.6s cubic-bezier(0.0,0.0,0.4,1.0) forwards;"></div>
+  <div style="position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0.0) 30%,rgba(0,0,0,0.0) 60%,rgba(0,0,0,0.6) 100%);"></div>
+  <div style="position:absolute;z-index:3;top:60px;left:0;right:0;text-align:center;animation:bscFadeLabel 0.8s ease 0.4s both;">
+    <div style="font-family:-apple-system,'SF Pro Display','Helvetica Neue',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:6px;">Broadcast Storage Calculator</div>
+    <div style="font-family:-apple-system,'SF Pro Display','Helvetica Neue',sans-serif;font-size:28px;font-weight:700;letter-spacing:-0.5px;color:#fff;line-height:1;">The Naked Film Co</div>
+  </div>
+</div>
+<style>
+@keyframes bscPush {
+  0%   { opacity:0; transform:scale(1.15); }
+  8%   { opacity:1; }
+  100% { opacity:1; transform:scale(1.0); }
+}
+@keyframes bscFadeLabel {
+  from { opacity:0; transform:translateY(6px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+</style>
+
+
+<!-- NAV BAR -->
+<div class="nav-bar">
+  <div style="min-width:0;flex:1">
+    <div class="nav-title">Broadcast Storage Calculator</div>
+    <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px">© The Naked Film Co Ltd</div>
+  </div>
+  <div id="nav-total-display" style="display:none;flex-shrink:0;text-align:right;text-shadow:0 0 4px rgba(0,0,0,0.9)">
+    <div id="nav-total-value" style="font-size:22px;font-weight:700;letter-spacing:-0.5px;color:var(--green);line-height:1;font-variant-numeric:tabular-nums"></div>
+    <div style="font-size:10px;color:rgba(255,255,255,0.55);margin-top:2px;letter-spacing:0.02em">total storage</div>
+  </div>
+  <button onclick="resetAll()" aria-label="Reset" style="flex-shrink:0;background:none;border:none;cursor:pointer;padding:4px 2px 4px 12px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);-webkit-tap-highlight-color:transparent;" onpointerdown="this.style.opacity=0.5" onpointerup="this.style.opacity=1" onpointerleave="this.style.opacity=1">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+  </button>
+</div>
+
+<!-- BOTTOM BAR — tabs + actions -->
+<div class="bottom-bar" id="bottom-bar">
+  <button class="bottom-tab active" id="tab-eng"    onclick="setTab('eng')"    aria-label="ENG tab">
+    <span class="bt-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M14 9h4M14 13h4"/></svg>
+    </span>
+    ENG
+  </button>
+  <button class="bottom-tab" id="tab-multi"  onclick="setTab('multi')"  aria-label="Multi tab">
+    <span class="bt-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="9" height="7" rx="1.5"/><rect x="13" y="4" width="9" height="7" rx="1.5"/><rect x="2" y="13" width="9" height="7" rx="1.5"/><rect x="13" y="13" width="9" height="7" rx="1.5"/></svg>
+    </span>
+    Multi
+  </button>
+  <button class="bottom-tab" id="tab-totals" onclick="setTab('totals')" aria-label="Totals tab">
+    <span class="bt-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v4H3zM3 10h12v4H3zM3 17h8v4H3z"/></svg>
+    </span>
+    Totals
+  </button>
+  <div class="bt-separator"></div>
+  <button class="bottom-tab" onclick="lockGate()" aria-label="Save event">
+    <span class="bt-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+    </span>
+    Save
+  </button>
+  <button class="bottom-tab" onclick="lockGate()" aria-label="Load event">
+    <span class="bt-icon">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><polyline points="12 11 12 17"/><polyline points="9 14 12 17 15 14"/></svg>
+    </span>
+    Open
+  </button>
+  <button class="bottom-tab" onclick="showInstructions()" aria-label="Help">
+    <span class="bt-icon" style="font-size:22px;font-weight:300;line-height:1">?</span>
+    Help
+  </button>
+</div>
+
+<!-- ════ ENG TAB ════ -->
+<div id="tab-eng-content" class="page-content">
+
+  <div class="large-title-section" style="padding-bottom:4px">
+    <div class="large-title">ENG Cameras</div>
+    <div class="large-title-sub">Card record &amp; offload estimator</div>
+  </div>
+  <div class="section" style="padding-top:8px">
+    <div id="cameras-container" style="display:flex;flex-direction:column;gap:10px"></div>
+    <div style="margin-top:10px">
+      <button class="add-camera-btn" onclick="addCamera()">
+        <div class="add-camera-btn-icon">+</div>
+        <span>Add ENG Camera</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ MULTI TAB ════ -->
+<div id="tab-multi-content" class="page-content" style="display:none">
+  <div class="large-title-section" style="padding-bottom:4px">
+    <div class="large-title">Multicam Record</div>
+    <div class="large-title-sub">Signal chain &amp; storage calculator</div>
+  </div>
+  <div class="section" style="padding-top:8px">
+    <div id="multicam-container" style="display:flex;flex-direction:column;gap:10px"></div>
+    <div style="margin-top:10px">
+      <button class="add-camera-btn" onclick="addMulticam()">
+        <div class="add-camera-btn-icon" style="background:var(--purple)">+</div>
+        <span>Add Multicam Record</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TOTALS TAB ════ -->
+<div id="tab-totals-content" class="page-content" style="display:none">
+  <div class="large-title-section" style="padding-bottom:4px;display:flex;align-items:flex-end;justify-content:space-between">
+    <div>
+      <div class="large-title">Totals</div>
+      <div class="large-title-sub">Combined storage summary</div>
+    </div>
+    <button onclick="lockGate()" style="flex-shrink:0;background:rgba(255,255,255,0.08);border:0.5px solid rgba(255,255,255,0.15);border-radius:10px;cursor:pointer;padding:8px 14px;display:flex;align-items:center;gap:7px;color:rgba(255,255,255,0.75);font-family:var(--font);font-size:13px;font-weight:500;margin-bottom:4px;-webkit-tap-highlight-color:transparent;" onpointerdown="this.style.opacity=0.6" onpointerup="this.style.opacity=1" onpointerleave="this.style.opacity=1">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+      Export PDF
+    </button>
+  </div>
+  <div class="section" style="padding-top:8px">
+    <div id="totals-container"></div>
+  </div>
+
+  <div id="recommended-storage" style="display:none">
+    <div style="padding:16px 16px 4px">
+      <div style="font-size:13px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--label3)">Recommended Storage</div>
+    </div>
+    <div class="rec-drives">
+      <a class="rec-card" href="https://www.amazon.co.uk/dp/B0DJ9K7PJK?tag=thenakedfilmc-21" target="_blank" rel="noopener">
+        <div class="rec-icon">🟠</div>
+        <div class="rec-body">
+          <div class="rec-name">LaCie Rugged Pro5 2TB</div>
+          <div class="rec-spec">6,700 MB/s · Thunderbolt 5 · IP68</div>
+        </div>
+        <div class="rec-btn">Buy →</div>
+      </a>
+      <a class="rec-card" href="https://www.amazon.co.uk/dp/B0DJ9LTJCY?tag=thenakedfilmc-21" target="_blank" rel="noopener">
+        <div class="rec-icon">🟠</div>
+        <div class="rec-body">
+          <div class="rec-name">LaCie Rugged Pro5 4TB</div>
+          <div class="rec-spec">6,700 MB/s · Thunderbolt 5 · IP68</div>
+        </div>
+        <div class="rec-btn">Buy →</div>
+      </a>
+      <a class="rec-card" href="https://www.amazon.co.uk/dp/B08YMR64RT?tag=thenakedfilmc-21" target="_blank" rel="noopener">
+        <div class="rec-icon">🔵</div>
+        <div class="rec-body">
+          <div class="rec-name">OWC Envoy Pro FX 2TB</div>
+          <div class="rec-spec">2,800 MB/s · Thunderbolt 4 · IP67 · ★4.6</div>
+        </div>
+        <div class="rec-btn">Buy →</div>
+      </a>
+      <a class="rec-card" href="https://www.amazon.co.uk/dp/B0B96PKM2J?tag=thenakedfilmc-21" target="_blank" rel="noopener">
+        <div class="rec-icon">🔵</div>
+        <div class="rec-body">
+          <div class="rec-name">OWC Envoy Pro FX 4TB</div>
+          <div class="rec-spec">2,800 MB/s · Thunderbolt 4 · IP67 · ★4.6</div>
+        </div>
+        <div class="rec-btn">Buy →</div>
+      </a>
+    </div>
+    <div class="rec-disclosure">Affiliate links — we may earn a small commission at no extra cost to you.</div>
+  </div>
+</div>
+
+<div style="height:48px"></div>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:16px 20px 32px;border-top:0.5px solid var(--separator2)">
+  <div style="font-size:12px;color:var(--label3);margin-bottom:4px">© 2026 The Naked Film Co Ltd. All rights reserved.</div>
+  <a href="mailto:feedback@nakedfilm.co.uk?subject=Storage%20Calc%20Feedback" style="font-size:12px;color:var(--blue);text-decoration:none">Send feedback to feedback@nakedfilm.co.uk</a>
+</div>
+
+<!-- ════════════════════════════
+     INSTRUCTIONS OVERLAY
+════════════════════════════ -->
+<div id="instructions-overlay" style="display:none">
+  <div id="instructions-sheet">
+    <div id="instructions-handle"></div>
+    <div id="instructions-title">How to use</div>
+    <div id="instructions-body">
+      <div class="instr-step">
+        <div class="instr-icon" style="background:rgba(10,132,255,0.18);color:var(--blue)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><circle cx="8" cy="11" r="2"/><path d="M14 9h4M14 13h4"/></svg>
+        </div>
+        <div class="instr-text">
+          <div class="instr-label">ENG Tab</div>
+          <div class="instr-sub">Add cameras, choose codec, resolution and frame rate to calculate card usage and offload times.</div>
+        </div>
+      </div>
+      <div class="instr-step">
+        <div class="instr-icon" style="background:rgba(191,90,242,0.18);color:var(--purple)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="9" height="7" rx="1.5"/><rect x="13" y="4" width="9" height="7" rx="1.5"/><rect x="2" y="13" width="9" height="7" rx="1.5"/><rect x="13" y="13" width="9" height="7" rx="1.5"/></svg>
+        </div>
+        <div class="instr-text">
+          <div class="instr-label">Multi Tab</div>
+          <div class="instr-sub">Plan multicam signal chains and calculate combined storage across multiple simultaneous camera feeds.</div>
+        </div>
+      </div>
+      <div class="instr-step">
+        <div class="instr-icon" style="background:rgba(48,209,88,0.18);color:var(--green)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v4H3zM3 10h12v4H3zM3 17h8v4H3z"/></svg>
+        </div>
+        <div class="instr-text">
+          <div class="instr-label">Totals Tab</div>
+          <div class="instr-sub">See a combined storage summary across all cameras and export a PDF report.</div>
+        </div>
+      </div>
+      <div class="instr-step">
+        <div class="instr-icon" style="background:rgba(255,159,10,0.18);color:var(--orange)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        </div>
+        <div class="instr-text">
+          <div class="instr-label">Save &amp; Open</div>
+          <div class="instr-sub">Save your session to pick up later, or open a previously saved event.</div>
+        </div>
+      </div>
+    </div>
+    <div id="instructions-actions">
+      <button id="instr-dont-show" onclick="dismissInstructions(true)">Don't show again</button>
+      <button id="instr-done" onclick="dismissInstructions(false)">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     JS DATA + LOGIC
+════════════════════════════ -->
+<script src="app.js"></script>
+</body>
+</html>
